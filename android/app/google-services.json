@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "834280724593",
+    "project_id": "therapyrobot-a8d2f",
+    "storage_bucket": "therapyrobot-a8d2f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834280724593:android:c24de4474f78b522dc23d0",
+        "android_client_info": {
+          "package_name": "com.example.therapyrobot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU_IQc47pTJBjCJpNGy3sBElVi1_3FZS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834280724593:android:66501383b1ad11f0dc23d0",
+        "android_client_info": {
+          "package_name": "com.tasneemdabash.therapyrobot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU_IQc47pTJBjCJpNGy3sBElVi1_3FZS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834280724593:android:729233eff80992e7dc23d0",
+        "android_client_info": {
+          "package_name": "mtechviral.fdemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU_IQc47pTJBjCJpNGy3sBElVi1_3FZS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
