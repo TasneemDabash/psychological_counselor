@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'profile_page.dart';
+import 'signup_page.dart';
+import 'menu_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,43 +25,74 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Therapy Robot',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(), // עמוד הבית הראשי
+      debugShowCheckedModeBanner: false,
+      title: 'SoulBridge',
+      theme: ThemeData.dark(),
+      home: TherapyBotPage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class TherapyBotPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+            Image.asset(
+              'assets/images/favicon.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Text(
+                  "Error loading image",
+                  style: TextStyle(color: Colors.red),
                 );
               },
-              child: Text('Login'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
-                );
-              },
-              child: Text('Sign Up'),
+            // Icon(
+            //   Icons.account_circle,
+            //   size: 100,
+            //   color: Colors.tealAccent,
+            // ),
+            SizedBox(height: 20),
+            Text(
+              "Hey! I'm TherapyBot",
+              style: TextStyle(
+                color: Colors.indigo.shade400,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "I'm here to help you love and nurture yourself",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30),
+            MouseRegion(
+              onEnter: (event) => {},
+              onExit: (event) => {},
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_downward,
+                  color: Colors.indigo.shade400,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -67,12 +101,12 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class LoginPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _HomePageState extends State<HomePage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -91,140 +125,122 @@ class _LoginPageState extends State<LoginPage> {
       if (userData['password'] == _passwordController.text) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AvatarPage()),
+          MaterialPageRoute(builder: (context) => MenuPage()),
         );
       } else {
         throw Exception('Incorrect password');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $e')),
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Error: $e'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
       );
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _login,
-              child: Text('Login'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SignUpPage extends StatefulWidget {
-  @override
-  _SignUpPageState createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
-  final _firstNameController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  Future<void> _signUp() async {
-    try {
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: _emailController.text)
-          .get();
-
-      if (userDoc.docs.isNotEmpty) {
-        throw Exception('User already exists');
-      }
-
-      await FirebaseFirestore.instance.collection('users').add({
-        'firstName': _firstNameController.text,
-        'age': int.parse(_ageController.text),
-        'email': _emailController.text,
-        'password': _passwordController.text,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign Up successful!')),
-      );
-
-      Navigator.pop(context);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign Up failed: $e')),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Sign Up')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _firstNameController,
-              decoration: InputDecoration(labelText: 'First Name'),
-            ),
-            TextField(
-              controller: _ageController,
-              decoration: InputDecoration(labelText: 'Age'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _signUp,
-              child: Text('Sign Up'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AvatarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Psychological Counselor'),
+        title: Text('', style: TextStyle(color: Colors.indigo.shade400)),
+        backgroundColor: Colors.black,
       ),
       body: Center(
-        child: CircleAvatar(
-          radius: 50,
-          child: Icon(
-            Icons.person,
-            size: 50,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Welcome',
+                  style: TextStyle(
+                    color: Colors.indigo.shade400,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 40),
+                MouseRegion(
+                  onEnter: (event) => {},
+                  onExit: (event) => {},
+                  child: Container(
+                    width: 250,
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Colors.indigo.shade400),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.indigo.shade400),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.indigo.shade400),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                MouseRegion(
+                  onEnter: (event) => {},
+                  onExit: (event) => {},
+                  child: Container(
+                    width: 250,
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.indigo.shade400),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.indigo.shade400),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.indigo.shade400),
+                        ),
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo.shade400,
+                    foregroundColor: Colors.black,
+                  ),
+                  onPressed: _login,
+                  child: Text('Login'),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo.shade400,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  },
+                  child: Text('Sign Up'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
