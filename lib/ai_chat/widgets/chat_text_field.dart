@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../core/theme/app_colors.dart';
 
 class ChatTextField extends StatelessWidget {
-  const ChatTextField({
-    super.key,
-    required TextEditingController controller,
-    required this.context,
-  }) : _controller = controller;
+  final TextEditingController controller;
+  final Function(String) onSubmitted;
 
-  final TextEditingController _controller;
-  final BuildContext context;
+  const ChatTextField({
+    Key? key,
+    required this.controller,
+    required this.onSubmitted,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50.h,
       decoration: BoxDecoration(
-        color: Colors.black, // Background color for the text field
-        borderRadius: BorderRadius.circular(30.r), // Rounded corners
+<<<<<<< HEAD
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(30.r),
+=======
+        color: Colors.white, // רקע לבן
+        borderRadius: BorderRadius.circular(30.r),
+        border: Border.all(color: Colors.grey.shade300),
+>>>>>>> 486fe11 (Initial clean commit after removing all secrets)
       ),
       child: Center(
         child: TextField(
-          controller: _controller,
+          controller: controller,
+          onSubmitted: (value) {
+            if (value.trim().isNotEmpty) {
+              FocusScope.of(context).unfocus();
+              onSubmitted(value);
+            }
+          },
+<<<<<<< HEAD
           style: Theme.of(context)
               .textTheme
               .titleSmall!
@@ -35,14 +47,35 @@ class ChatTextField extends StatelessWidget {
                 .textTheme
                 .titleSmall!
                 .copyWith(color: AppColors.background),
+=======
+          style: TextStyle(
+            fontFamily: 'NotoSansHebrew', // פונטים דמויי ChatGPT
+            color: Colors.black,
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w400,
+          ),
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            hintText: "Type your message...",
+            hintStyle: TextStyle(
+              fontFamily: 'NotoSansHebrew',
+              color: Colors.grey,
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w400,
+            ),
+>>>>>>> 486fe11 (Initial clean commit after removing all secrets)
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(
               vertical: 16,
               horizontal: 20,
-            ), // Adjust padding for better height alignment
+            ),
           ),
         ),
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 486fe11 (Initial clean commit after removing all secrets)

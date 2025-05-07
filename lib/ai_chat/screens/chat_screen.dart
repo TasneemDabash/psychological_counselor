@@ -7,8 +7,12 @@ import '../provider/chat_provider.dart';
 import '../widgets/build_message.dart';
 import '../widgets/chat_text_field.dart';
 import '../widgets/scroller.dart';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 import '../widgets/send_button.dart';
-import '../../../main/navigation/routes/name.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -22,66 +26,31 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<Map<String, String>> _messages = [];
 
   bool _isLoading = false;
-  final ScrollController _scrollController =
-      ScrollController(); // Add a ScrollController
-
-
-
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void dispose() {
-    _scrollController.dispose(); // Dispose of the ScrollController
-
+    _scrollController.dispose();
     super.dispose();
   }
 
-
-  Future<void> _sendMessage(String message) async {
-    if (message.trim().isEmpty) return;
-
-    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-
-    chatProvider.addMessage("user", message);
-    setState(() {
-      _isLoading = true;
-    });
-
-    _controller.clear();
-    scrollToBottom(_scrollController);
-
-    final response = await getGPTResponse(message,'23');
-
-    if (response != null) {
-      chatProvider.addMessage("gpt", response);
-    }
-
-    setState(() {
-      _isLoading = false;
-    });
-    scrollToBottom(_scrollController);
-  }
-
   Widget _buildInputField() {
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Column(
         children: [
-
           SizedBox(height: 5.h),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ChatTextField(
-                controller: _controller,
-                context: context,
-              ),
+              ChatTextField(controller: _controller, onSubmitted: _sendMessage,
+),
               SizedBox(width: 10.w),
               SendButton(
                 path: 'send',
                 onTap: () {
                   if (_controller.text.isNotEmpty) {
-                    FocusScope.of(context).unfocus(); // Dismiss the keyboard
+                    FocusScope.of(context).unfocus();
                     _sendMessage(_controller.text);
                   }
                 },
@@ -100,15 +69,6 @@ class _ChatScreenState extends State<ChatScreen> {
     final chatProvider = Provider.of<ChatProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Chat"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.video_call),
-            onPressed: () => Navigator.pushNamed(context, AppRoutes.videoCall),
-          ),
-        ],
-      ),
       body: Column(
         children: [
           Expanded(
@@ -125,4 +85,51 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Future<void> _sendMessage(String message) async {
+  if (message.trim().isEmpty) return;
+
+  final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+  print("📨 Sending user message: $message");
+
+  chatProvider.addMessage("user", message);
+  await saveMessageToFirestore("user", message);
+
+  setState(() {
+    _isLoading = true;
+  });
+
+  _controller.clear();
+  scrollToBottom(_scrollController);
+
+  final response = await getGPTResponse(message, '23');
+  print("🤖 GPT responded: $response");
+
+  if (response != null && response.isNotEmpty) {
+    chatProvider.addMessage("gpt", response);
+    await saveMessageToFirestore("gpt", response);
+  } else {
+    chatProvider.addMessage("gpt", "⚠️ No response from GPT.");
+  }
+
+  setState(() {
+    _isLoading = false;
+  });
+
+  scrollToBottom(_scrollController);
+}
+// ✅ שומר את ההודעה ב-Firestore
+Future<void> saveMessageToFirestore(String sender, String text) async {
+  try {
+    print("🟡 Saving message: $sender: $text");
+
+    await FirebaseFirestore.instance.collection('messages').add({
+      'sender': sender,
+      'text': text,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+    print("✅ Message saved to Firestore");
+  } catch (e) {
+    print("❌ Firestore save failed: $e");
+  }
+}
 }

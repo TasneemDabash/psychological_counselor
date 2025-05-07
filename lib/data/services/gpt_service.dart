@@ -7,12 +7,11 @@ final List<Map<String, String>> baseSystemPrompt = [
   {
     'role': 'system',
     'content': '''
-You are Psychiatric AI , an AI assistant specialized in psychiatry and mental health. 
-- You will answer only psychiatry/mental-health-related questions. 
-- If the user asks about something outside these topics, politely decline by saying: "I’m sorry, I can only answer psychiatry/mental-health-related questions."
-- Always provide well-structured, complete, and helpful answers related to psychiatry.
-- End your answers with a concluding sentence that summarizes all points.
-- If you don’t know the answer, clearly state that.
+You are a helpful and friendly AI assistant. 
+You are here to help users with any questions they may have. 
+Be clear, kind, and informative in your responses.
+If you don’t know the answer, just say you don’t know.
+
 '''
   }
 ];
@@ -38,11 +37,9 @@ Future<String?> getGPTResponse(String userMessage, String threadId) async {
   }
 
   conversationMap[threadId]!.add({'role': 'user', 'content': userMessage});
-
   trimMessageHistory(conversationMap[threadId]!);
 
   try {
-    // 4) Send the entire conversation to OpenAI
     final response = await http.post(
       url,
       headers: {
@@ -58,25 +55,38 @@ Future<String?> getGPTResponse(String userMessage, String threadId) async {
       }),
     );
 
-    // 5) Check if successful
+    // ✅ הדפסות לזיהוי תקשורת עם OpenAI
+    print("📱 Response status: \${response.statusCode}");
+    print("📩 Response body: \${response.body}");
+
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       final gptResponse = cleanText(
         jsonResponse['choices'][0]['message']['content'].trim(),
       );
+<<<<<<< HEAD
+=======
+print("📤 שולח שאלה ל-GPT...");
+print("🧵 מזהה thread: $threadId");
+print("📝 תוכן ההודעה: $userMessage");
+>>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 
-      // 6) Add assistant response to conversation
       conversationMap[threadId]!.add({'role': 'assistant', 'content': gptResponse});
 
       return gptResponse;
+<<<<<<< HEAD
     } else {
-      // Model restricted or some other issue
+=======
+    } 
+else {
+>>>>>>> 486fe11 (Initial clean commit after removing all secrets)
       if (response.statusCode == 403) {
         return "Access to the requested model is restricted. Please check your account.";
       }
       return "I'm having trouble responding right now.";
     }
   } catch (error) {
+    print("❌ Error: \$error");
     return "An error occurred. Please try again.";
   }
 }
@@ -84,9 +94,7 @@ Future<String?> getGPTResponse(String userMessage, String threadId) async {
 // Limits stored messages to avoid exceeding token limits
 void trimMessageHistory(List<Map<String, String>> messageHistory) {
   const maxMessages = 10;
-  // Keep the system prompt at index 0, then trim others if exceeding
   if (messageHistory.length > maxMessages) {
-    // This removes everything except the system message (index 0) and the last (maxMessages - 1) messages
     messageHistory.removeRange(1, messageHistory.length - (maxMessages - 1));
   }
 }
