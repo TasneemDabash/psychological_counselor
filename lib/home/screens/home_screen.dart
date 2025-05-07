@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:provider/provider.dart';
 import '../../../data/services/gpt_service.dart';
+import '../../../home/screens/home_screen.dart';
+import '../../../main/navigation/routes/name.dart';
 import '../../ai_chat/provider/chat_provider.dart';
 import '../../ai_chat/widgets/build_message.dart';
 import '../../ai_chat/widgets/chat_text_field.dart';
@@ -68,6 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          IconButton(
+                icon: const Icon(Icons.video_call),
+                onPressed: () => Navigator.pushNamed(context, AppRoutes.videoCall),
+          ),
           // The text field
           Expanded(
             child: ChatTextField(controller: _controller, context: context),

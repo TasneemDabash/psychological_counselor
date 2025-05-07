@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phychological_counselor/ai_chat/screens/chat_screen.dart';
 import 'package:phychological_counselor/home/screens/home_screen.dart';
+import 'package:phychological_counselor/features/video_call/video_call_screen.dart';
 
 import '../../../data/local/user_database.dart';
 import '../../global.dart';
@@ -9,6 +10,10 @@ import 'name.dart';
 
 class AppPage {
   static List<PageEntity> routes = [
+    PageEntity(
+      route: AppRoutes.videoCall,
+      page: const VideoCallScreen(),
+    ),
     PageEntity(
       route: AppRoutes.initial,
       page: HomeScreen(),

@@ -8,6 +8,7 @@ import '../widgets/build_message.dart';
 import '../widgets/chat_text_field.dart';
 import '../widgets/scroller.dart';
 import '../widgets/send_button.dart';
+import '../../../main/navigation/routes/name.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -99,9 +100,17 @@ class _ChatScreenState extends State<ChatScreen> {
     final chatProvider = Provider.of<ChatProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Chat"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.video_call),
+            onPressed: () => Navigator.pushNamed(context, AppRoutes.videoCall),
+          ),
+        ],
+      ),
       body: Column(
         children: [
-
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -115,4 +124,5 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+
 }

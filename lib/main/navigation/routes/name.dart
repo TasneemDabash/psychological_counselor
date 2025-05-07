@@ -17,5 +17,6 @@ class AppRoutes{
   static const profile="/profile";
   static const productDetails ="/productDetails";
   static const recipeScreen ="/recipeScreen";
+  static const videoCall = "/videoCall";
 
 }
