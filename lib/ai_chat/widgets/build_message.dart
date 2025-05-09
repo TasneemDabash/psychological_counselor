@@ -24,17 +24,16 @@ Widget buildMessage(Map<String, String> message, BuildContext context) {
               constraints: BoxConstraints(maxWidth: 230.w),
               decoration: BoxDecoration(
                 color: isUserMessage
-<<<<<<< HEAD
-                    ? AppColors.userChatColor
-                    : AppColors.botChatColor,
-                borderRadius: BorderRadius.circular(10.r),
-=======
+                
+                //     ? AppColors.userChatColor
+                //     : AppColors.botChatColor,
+                // borderRadius: BorderRadius.circular(10.r),
+
                     ? Colors.white // ✅ רקע לבן למשתמש
                     : AppColors.botChatColor,
                 borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(color: Colors.grey.shade300), // מסגרת רכה
 
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
               ),
               child: MarkdownBody(
                 data: messageText,
@@ -42,12 +41,10 @@ Widget buildMessage(Map<String, String> message, BuildContext context) {
                     MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
                   p: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 14.sp,
-<<<<<<< HEAD
-=======
+
                         color: Colors.black, // ✅ טקסט שחור תמיד
                         fontFamily: 'NotoSansHebrew', // ✅ הוספת שם הפונט
 
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
                       ),
                   strong: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 14.sp,

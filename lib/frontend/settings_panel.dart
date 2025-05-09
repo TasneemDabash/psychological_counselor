@@ -3,11 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-<<<<<<< HEAD
-=======
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 
 class SettingsPanel extends StatefulWidget {
   const SettingsPanel({Key? key}) : super(key: key);
@@ -25,10 +23,10 @@ class _SettingsPanelState extends State<SettingsPanel> {
   @override
   void initState() {
     super.initState();
-<<<<<<< HEAD
-    _loadUserProfile();
-  }
-=======
+// <<<<<<< HEAD
+//     _loadUserProfile();
+//   }
+// =======
       testEmailAPI(); // ← קריאה לפונקציה מיד כשהמסך עולה
 
     _loadUserProfile();
@@ -50,7 +48,6 @@ class _SettingsPanelState extends State<SettingsPanel> {
   }
 }
 
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 
   Future<void> _loadUserProfile() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -149,14 +146,14 @@ class _SettingsPanelState extends State<SettingsPanel> {
   }
 
   @override
-<<<<<<< HEAD
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      color: Colors.grey.shade100,
-      padding: const EdgeInsets.all(16),
-      child: ListView(
-=======
+// <<<<<<< HEAD
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 300,
+//       color: Colors.grey.shade100,
+//       padding: const EdgeInsets.all(16),
+//       child: ListView(
+// =======
 Widget build(BuildContext context) {
   return Expanded( // ✅ הוספנו את זה כדי שה־Container יקבל גובה מתאים
     child: Container(
@@ -164,27 +161,27 @@ Widget build(BuildContext context) {
       color: Colors.grey.shade100,
       padding: const EdgeInsets.all(16),
       child: Column(
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+
         children: [
           const Text("⚙️ Settings", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
 
-<<<<<<< HEAD
-          ListTile(
-            leading: const Icon(Icons.person_outline, size: 22),
-            title: const Text("My Profile", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-            onTap: _showProfileDialog,
-          ),
+// <<<<<<< HEAD
+//           ListTile(
+//             leading: const Icon(Icons.person_outline, size: 22),
+//             title: const Text("My Profile", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+//             onTap: _showProfileDialog,
+//           ),
 
-          // const Divider(),
-          // const SizedBox(height: 10),
+//           // const Divider(),
+//           // const SizedBox(height: 10),
 
-        ],
-      ),
-    );
-  }
-}
-=======
+//         ],
+//       ),
+//     );
+//   }
+// }
+// =======
           Expanded( // ✅ כדי שה־ListView לא יזרוק שגיאה
             child: ListView(
               children: [
@@ -202,4 +199,3 @@ Widget build(BuildContext context) {
   );
 }
 }
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)

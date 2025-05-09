@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
+
 import 'main/app.dart';
 import 'main/global.dart';
 import 'package:flutter/material.dart';
@@ -24,47 +24,45 @@ void main() async {
   await Global.init();
 
   testFirestoreAccess(); // ← בדיקת חיבור ל-Firestore
-
   runApp(const MyApp());
 }
-=======
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'ai_chat/provider/chat_provider.dart';
-import 'frontend/firebase_initializer.dart';
-import 'main/app.dart';
-import 'main/global.dart';
+// import 'package:provider/provider.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+// import 'ai_chat/provider/chat_provider.dart';
+// import 'frontend/firebase_initializer.dart';
+// import 'main/app.dart';
+// import 'main/global.dart';
 
-  // טוען את קובץ הסביבה (.env)
-  await dotenv.load(fileName: ".env");
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
 
-  // אתחול Firebase
-  await FirebaseInitializer.initialize();
+//   // טוען את קובץ הסביבה (.env)
+//   await dotenv.load(fileName: ".env");
 
-  // אתחול משתנים גלובליים
-  await Global.init();
+//   // אתחול Firebase
+//   await FirebaseInitializer.initialize();
 
-  // בדיקה שה־Firestore עובד
-  testFirestoreAccess();
+//   // אתחול משתנים גלובליים
+//   await Global.init();
 
-  // הרצת האפליקציה
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ChatProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
-}
+//   // בדיקה שה־Firestore עובד
+//   testFirestoreAccess();
 
-// פונקציה לבדיקה האם Firestore נגיש
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+//   // הרצת האפליקציה
+//   runApp(
+//     MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => ChatProvider()),
+//       ],
+//       child: const MyApp(),
+//     ),
+//   );
+// }
+
+
 void testFirestoreAccess() async {
   try {
     final snapshot = await FirebaseFirestore.instance.collection('users').get();
@@ -72,8 +70,4 @@ void testFirestoreAccess() async {
   } catch (e) {
     print("❌ Firestore access failed: $e");
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)

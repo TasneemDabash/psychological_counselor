@@ -17,14 +17,14 @@ class ChatTextField extends StatelessWidget {
     return Container(
       height: 50.h,
       decoration: BoxDecoration(
-<<<<<<< HEAD
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(30.r),
-=======
+
+        // color: Colors.black,
+        // borderRadius: BorderRadius.circular(30.r),
+
         color: Colors.white, // רקע לבן
         borderRadius: BorderRadius.circular(30.r),
         border: Border.all(color: Colors.grey.shade300),
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+
       ),
       child: Center(
         child: TextField(
@@ -35,19 +35,19 @@ class ChatTextField extends StatelessWidget {
               onSubmitted(value);
             }
           },
-<<<<<<< HEAD
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(color: Colors.white),
-          cursorColor: AppColors.background,
-          decoration: InputDecoration(
-            hintText: "Type your message...",
-            hintStyle: Theme.of(context)
-                .textTheme
-                .titleSmall!
-                .copyWith(color: AppColors.background),
-=======
+
+          // style: Theme.of(context)
+          //     .textTheme
+          //     .titleSmall!
+          //     .copyWith(color: Colors.white),
+          // cursorColor: AppColors.background,
+          // decoration: InputDecoration(
+          //   hintText: "Type your message...",
+          //   hintStyle: Theme.of(context)
+          //       .textTheme
+          //       .titleSmall!
+          //       .copyWith(color: AppColors.background),
+
           style: TextStyle(
             fontFamily: 'NotoSansHebrew', // פונטים דמויי ChatGPT
             color: Colors.black,
@@ -63,7 +63,7 @@ class ChatTextField extends StatelessWidget {
               fontSize: 15.sp,
               fontWeight: FontWeight.w400,
             ),
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(
               vertical: 16,
@@ -74,8 +74,4 @@ class ChatTextField extends StatelessWidget {
       ),
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)

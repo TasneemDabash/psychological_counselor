@@ -4,13 +4,11 @@ import 'package:phychological_counselor/home/screens/home_screen.dart'; // הי�
 import 'package:phychological_counselor/frontend/SignUpPage.dart';  // היבוא של SignUpPage
 //import 'package:phychological_counselor/frontend/profile_page.dart';
 import 'package:phychological_counselor/main/navigation/routes/name.dart';
-<<<<<<< HEAD
-=======
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:phychological_counselor/frontend/reset_password_page.dart';
 import 'package:phychological_counselor/frontend/reset_password_page.dart';
 
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 
 class HomePage extends StatefulWidget {
   @override
@@ -45,25 +43,25 @@ class _HomePageState extends State<HomePage> {
     print("Trying login with email: $email");
 
 
-<<<<<<< HEAD
-  try {
-        print("Running Firestore query...");
+// <<<<<<< HEAD
+//   try {
+//         print("Running Firestore query...");
 
-    final userDoc = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .get();
-         print("Query complete");
-    print("Number of users found: ${userDoc.docs.length}");
+//     final userDoc = await FirebaseFirestore.instance
+//         .collection('users')
+//         .where('email', isEqualTo: email)
+//         .get();
+//          print("Query complete");
+//     print("Number of users found: ${userDoc.docs.length}");
 
 
-  if (userDoc.docs.isEmpty) {
-  showDialog(
-    context: context,
-    builder: (_) => AlertDialog(
-      title: Text('User Not Found'),
-      content: Text('No user found with this email'),
-=======
+//   if (userDoc.docs.isEmpty) {
+//   showDialog(
+//     context: context,
+//     builder: (_) => AlertDialog(
+//       title: Text('User Not Found'),
+//       content: Text('No user found with this email'),
+// =======
  try {
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: email,
@@ -75,50 +73,45 @@ class _HomePageState extends State<HomePage> {
   Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
 
 } on FirebaseAuthException catch (e) {
-  print("❌ FirebaseAuth Login Error: $e");
+    print("❌ FirebaseAuth Login Error: $e");
 
-  showDialog(
-    context: context,
-    builder: (_) => AlertDialog(
-      title: Text('Login Failed'),
-      content: Text('Error: ${e.message}'),
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
-      actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text('OK')),
-      ],
-    ),
-  );
-<<<<<<< HEAD
-  return;
-}
-
-
-    final userData = userDoc.docs.first.data();
-        print("User data from Firestore: $userData");
-
-
-    if (userData['password'] == password) {
-      // הצלחה → מעבר לצ'אט
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
-    } else {
-      throw Exception('Incorrect password');
-    }
-  } catch (e) {
-=======
-}
-
-   catch (e) {
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         title: Text('Login Failed'),
-        content: Text('Error: $e'),
+        content: Text('Error: ${e.message}'),
+
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: Text('OK')),
         ],
       ),
     );
+// <<<<<<< HEAD
+//   return;
+// }
+
+//     final userData = userDoc.docs.first.data();
+//         print("User data from Firestore: $userData");
+
+//     if (userData['password'] == password) {
+//       // הצלחה → מעבר לצ'אט
+//       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
+//     } else {
+//       throw Exception('Incorrect password');
+//     }
+//   } catch (e) {
+// =======
+  }catch (e) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Error: $e'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: Text('OK')),
+          ],
+        ),
+      );
   }
 }
 
@@ -204,8 +197,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: _login,
                   child: Text('Login'),
                 ),
-<<<<<<< HEAD
-=======
+
                 TextButton(
   onPressed: () {
     Navigator.push(
@@ -218,7 +210,7 @@ class _HomePageState extends State<HomePage> {
     style: TextStyle(color: Colors.indigo.shade400),
   ),
 ),
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+
                 SizedBox(height: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

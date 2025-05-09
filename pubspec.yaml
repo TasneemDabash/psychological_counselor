@@ -42,12 +42,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   model_viewer_plus: ^1.9.1
-<<<<<<< HEAD
-  http: ^1.3.0
-=======
+
  # http: ^1.3.0
   http: 1.3.0
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 
   flutter_screenutil: ^5.9.0
   lottie: ^3.0.0
@@ -126,14 +123,12 @@ flutter:
     - assets/icons/
     - assets/avatars/
 
-<<<<<<< HEAD
-=======
   fonts:
     - family: NotoSansHebrew
       fonts:
        
         - asset: assets/fonts/NotoSansHebrew-Regular.ttf
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

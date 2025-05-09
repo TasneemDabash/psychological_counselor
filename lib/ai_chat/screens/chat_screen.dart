@@ -7,10 +7,7 @@ import '../provider/chat_provider.dart';
 import '../widgets/build_message.dart';
 import '../widgets/chat_text_field.dart';
 import '../widgets/scroller.dart';
-<<<<<<< HEAD
-=======
 
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
 import '../widgets/send_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

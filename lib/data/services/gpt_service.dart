@@ -64,22 +64,15 @@ Future<String?> getGPTResponse(String userMessage, String threadId) async {
       final gptResponse = cleanText(
         jsonResponse['choices'][0]['message']['content'].trim(),
       );
-<<<<<<< HEAD
-=======
-print("📤 שולח שאלה ל-GPT...");
-print("🧵 מזהה thread: $threadId");
-print("📝 תוכן ההודעה: $userMessage");
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+// print("📤 שולח שאלה ל-GPT...");
+// print("🧵 מזהה thread: $threadId");
+// print("📝 תוכן ההודעה: $userMessage");
 
       conversationMap[threadId]!.add({'role': 'assistant', 'content': gptResponse});
 
       return gptResponse;
-<<<<<<< HEAD
     } else {
-=======
-    } 
-else {
->>>>>>> 486fe11 (Initial clean commit after removing all secrets)
+
       if (response.statusCode == 403) {
         return "Access to the requested model is restricted. Please check your account.";
       }
