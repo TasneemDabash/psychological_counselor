@@ -36,7 +36,6 @@ import 'package:phychological_counselor/home/screens/firestore_service.dart';
 import 'package:phychological_counselor/home/screens/speech_service.dart';
 import 'package:flutter/foundation.dart'; // <-- בשביל kIsWeb
 
-
 import '../../ai_chat/provider/chat_provider.dart';
 import '../../ai_chat/widgets/build_message.dart';
 import '../../ai_chat/widgets/chat_text_field.dart';
@@ -49,9 +48,8 @@ import '../../ai_chat/widgets/send_button.dart';
 // =======
 import '../../frontend/settings_panel.dart';
 import '../../ai_chat/widgets/chat_history_sidebar.dart';
-import 'speech_service.dart';
-import 'package:phychological_counselor/services/python_api.dart'; // ← יבוא השירות
-import 'package:phychological_counselor/backend/python_ml_api.dart';
+// import 'package:phychological_counselor/services/python_api.dart'; // ← יבוא השירות
+// import 'package:phychological_counselor/backend/python_ml_api.dart';
 
 
 import 'tts_service.dart';
@@ -257,7 +255,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _audioHandler = AudioHandler();
   final _ttsService = TtsService();
-  final _speechService = SpeechService();
+  // final _speechService = SpeechService();
+
+  late SpeechService _speechService;
 
   // String? _userId;
   String? _currentSessionId;
@@ -268,6 +268,12 @@ void initState() {
   super.initState();
 
   print("⚙️ initState started");
+
+  // Assuming _userId is already available at this point:
+  _userId = FirebaseAuth.instance.currentUser?.uid;
+  if (_userId != null) {
+    _speechService = SpeechService();
+  }
 
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
     print("📡 Firebase auth listener activated");
@@ -325,19 +331,19 @@ Future<void> _sendMessage(String message) async {
   _scrollToBottom();
 
   try {
-final response = await getGPTResponse(message, _userId!);
-final reply = response ?? "❌ לא התקבלה תשובה מה-GPT";
+    final response = await getGPTResponse(message, _userId!);
+    final reply = response ?? "❌ לא התקבלה תשובה מה-GPT";
 
-chatProvider.addMessage("gpt", reply);
-if (_lastInputWasVoice) await _ttsService.speak(reply);
+    chatProvider.addMessage("gpt", reply);
+    if (_lastInputWasVoice) await _ttsService.speak(reply);
 
-  } catch (e) {
-    chatProvider.addMessage("gpt", "❌ שגיאה בקבלת תשובה מה-GPT");
+    } catch (e) {
+      chatProvider.addMessage("gpt", "❌ שגיאה בקבלת תשובה מה-GPT");
+    }
+
+    setState(() => _isLoading = false);
+    _scrollToBottom();
   }
-
-  setState(() => _isLoading = false);
-  _scrollToBottom();
-}
 
 
   void _scrollToBottom() {
@@ -352,12 +358,6 @@ if (_lastInputWasVoice) await _ttsService.speak(reply);
     });
   }
 
-// <<<<<<< HEAD
-//   @override
-//   void dispose() {
-//     _scrollController.dispose();
-//     super.dispose();
-// =======
   void _loadChatFromHistory(String sessionId) async {
     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
     chatProvider.clearMessages();
@@ -384,15 +384,6 @@ if (_lastInputWasVoice) await _ttsService.speak(reply);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Row(
-// <<<<<<< HEAD
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           Expanded(
-//             child: ChatTextField(controller: _controller,   onSubmitted: _sendMessage,
-// ),
-//           ),
-//           const SizedBox(width: 10),
-// =======
         children: [
           Expanded(
             child: ChatTextField(
@@ -428,10 +419,6 @@ if (_lastInputWasVoice) await _ttsService.speak(reply);
     );
   }
 
-// <<<<<<< HEAD
-//     @override
-//   Widget build(BuildContext context) {
-// =======
   @override
   Widget build(BuildContext context) {
     if (_userId == null) return Center(child: CircularProgressIndicator());
@@ -441,55 +428,6 @@ if (_lastInputWasVoice) await _ttsService.speak(reply);
     return Scaffold(
       body: Row(
         children: [
-// <<<<<<< HEAD
-//           Container(
-//             width: 200,
-//             color: Colors.grey[200],
-//             child: const SettingsPanel(),
-//           ),
-//           Expanded(
-//             child: LayoutBuilder(
-//               builder: (context, constraints) {
-//                 final isMobile = constraints.maxWidth < 600;
-//                 return Column(
-//                   children: [
-//                     SizedBox(height: 40.h),
-//                     SizedBox(
-//                       height: 250,
-//                       child: ModelViewer(
-//                         backgroundColor: Colors.white,
-//                         src: 'assets/avatars/avatar.glb',
-//                         alt: 'A 3D model of an avatar',
-//                         autoRotate: false,
-//                         iosSrc: 'assets/avatars/avatar.glb',
-//                         disableZoom: true,
-//                         disablePan: true,
-//                         disableTap: true,
-//                         cameraOrbit: "0deg 90deg 0m",
-//                         cameraTarget: "0m 1.5m 0m",
-//                         fieldOfView: "15deg",
-//                       ),
-//                     ),
-//                     Expanded(
-//                       child: Column(
-//                         children: [
-//                           Expanded(
-//                             child: ListView.builder(
-//                               controller: _scrollController,
-//                               itemCount: chatProvider.messages.length,
-//                               itemBuilder: (context, index) =>
-//                                   buildMessage(chatProvider.messages[index], context),
-//                             ),
-//                           ),
-//                           _buildInputField(),
-//                           SizedBox(height: 20.h),
-//                         ],
-//                       ),
-//                     ),
-//                   ],
-//                 );
-//               },
-// =======
           Expanded(
             flex: 1,
             child: Container(
@@ -540,23 +478,23 @@ if (_lastInputWasVoice) await _ttsService.speak(reply);
                         ),
                       ),
                       _buildInputField(),
-                      ElevatedButton(
-  onPressed: () async {
-    try {
-      final result = await PythonAPI.sendEcho("שלום מהצ'אט");
-      print("✅ תשובה מהשרת: $result");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("שרת ענה: $result")),
-      );
-    } catch (e) {
-      print("❌ שגיאה: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("שגיאה בחיבור לשרת")),
-      );
-    }
-  },
-  child: Text("בדוק חיבור לשרת Python"),
-),
+                      // ElevatedButton(
+                        // onPressed: () async {
+                        //   try {
+                        //     final result = await PythonAPI.sendEcho("שלום מהצ'אט");
+                        //     print("✅ תשובה מהשרת: $result");
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text("שרת ענה: $result")),
+                        //     );
+                        //   } catch (e) {
+                        //     print("❌ שגיאה: $e");
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text("שגיאה בחיבור לשרת")),
+                        //     );
+                        //   }
+                        // },
+                        // child: Text("בדוק חיבור לשרת Python"),
+                      // ),
 
                       SizedBox(height: 20.h),
                     ],
