@@ -9,6 +9,7 @@ from model.trainer import train_models
 from model.save_load import save_model
 from config import MODEL_OUTPUT_PATH, SCALER_OUTPUT_PATH
 import numpy as np
+from sklearn.decomposition import PCA
 
 import matplotlib.pyplot as plt
 # Add after loading and cleaning data
@@ -22,7 +23,12 @@ plt.show()
 
 X = embed_statements(df["statement"])
 y_scaled, scaler = scale_labels(df["label"].values)
-X = reduce_dimensions(X, n_components=128)
+
+# Fit PCA and save it
+pca = PCA(n_components=128)
+X = pca.fit_transform(X)
+save_model(pca, "ML_Algorithm/models/pca_transformer.pkl")
+
 X = scale_features(X)
 # After embedding and scaling
 X, y_scaled = filter_outliers(X, y_scaled, threshold=2)

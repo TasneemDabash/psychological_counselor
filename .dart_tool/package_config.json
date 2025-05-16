@@ -123,9 +123,9 @@
     },
     {
       "name": "firebase_auth",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/firebase_auth-4.16.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/firebase_auth-4.20.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.2"
     },
     {
       "name": "firebase_auth_platform_interface",
@@ -135,9 +135,9 @@
     },
     {
       "name": "firebase_auth_web",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/firebase_auth_web-5.8.13",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/firebase_auth_web-5.12.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.2"
     },
     {
       "name": "firebase_core",
@@ -153,9 +153,9 @@
     },
     {
       "name": "firebase_core_web",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/firebase_core_web-2.22.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/firebase_core_web-2.17.5",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.2"
     },
     {
       "name": "floor",
@@ -194,6 +194,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_lints",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_lints-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "flutter_markdown",
       "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_markdown-0.7.5",
       "packageUri": "lib/",
@@ -207,21 +213,21 @@
     },
     {
       "name": "flutter_sound",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_sound-9.26.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_sound-8.5.0",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_sound_platform_interface",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_sound_platform_interface-9.26.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_sound_platform_interface-8.5.0",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_sound_web",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_sound_web-9.26.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/flutter_sound_web-8.5.0",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_svg",
@@ -308,10 +314,16 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "logger",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/logger-2.5.0",
+      "name": "lints",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "logger",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/logger-1.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "lottie",
@@ -345,7 +357,7 @@
     },
     {
       "name": "model_viewer_plus",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/model_viewer_plus-1.9.1",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/model_viewer_plus-1.8.0",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -494,6 +506,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "recase",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/recase-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "record",
       "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/record-3.0.4",
       "packageUri": "lib/",
@@ -627,9 +645,9 @@
     },
     {
       "name": "sqlite3",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/sqlite3-2.7.2",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/sqlite3-2.4.5",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.4"
     },
     {
       "name": "sqlparser",
@@ -734,6 +752,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "uuid",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/uuid-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/vector_graphics-1.1.16",
       "packageUri": "lib/",
@@ -765,19 +789,19 @@
     },
     {
       "name": "web",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/web-1.1.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/web-0.5.1",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.3"
     },
     {
       "name": "webview_flutter",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/webview_flutter-4.10.0",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/webview_flutter-4.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
     {
       "name": "webview_flutter_android",
-      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/webview_flutter_android-4.3.1",
+      "rootUri": "file:///Users/tasneemdabash/.pub-cache/hosted/pub.dev/webview_flutter_android-3.16.9",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -818,7 +842,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-05-16T07:30:04.384015Z",
+  "generated": "2025-05-16T10:32:47.862695Z",
   "generator": "pub",
   "generatorVersion": "3.6.1",
   "flutterRoot": "file:///Users/tasneemdabash/development/flutter",

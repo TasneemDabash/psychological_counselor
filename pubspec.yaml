@@ -30,17 +30,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.15.1
-  firebase_auth: ^4.9.0
-  cloud_firestore: ^4.9.1
-  http: ^1.1.0
+  firebase_core: ^2.27.1
+  firebase_auth: ^4.17.9
+  firebase_auth_web: ^5.9.9
+  cloud_firestore: ^4.15.9
+  http: ^1.2.0
   permission_handler: ^11.0.0
-  flutter_sound: ^9.26.0
+  flutter_sound: ^8.5.0
   speech_to_text: ^6.1.0
   record: ^3.0.0
   flutter_tts: ^3.8.2
   cupertino_icons: ^1.0.8
-  model_viewer_plus: ^1.9.1
+  model_viewer_plus: ^1.8.0
   flutter_screenutil: ^5.9.0
   lottie: ^3.0.0
   flutter_svg: ^2.0.10+1
@@ -112,4 +113,4 @@ flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^3.0.1
