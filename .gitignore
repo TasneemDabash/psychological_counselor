@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+/ML_Algorithm/venv
+/ML_Algorithm/.venv/
+.venv/
+/ML_Algorithm/therapyrobot-a8d2f-firebase-adminsdk-4nmam-0014eeaa1f.json

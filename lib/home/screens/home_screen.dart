@@ -1,24 +1,3 @@
-// <<<<<<< HEAD
-// // 📄 קובץ: home_screen.dart
-
-// import 'dart:async';
-// import 'dart:convert';
-// import 'dart:io';
-// import 'dart:html' as html;
-
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:model_viewer_plus/model_viewer_plus.dart';
-// import 'package:provider/provider.dart';
-// import 'package:record/record.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:path_provider/path_provider.dart';
-// import 'package:path/path.dart' as p;
-
-// import '../../../data/services/gpt_service.dart';
-// =======
-// 📄 קובץ: lib/home/screens/home_screen.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,18 +13,12 @@ import 'dart:convert';
 import 'package:phychological_counselor/home/screens/audio_handler.dart';
 import 'package:phychological_counselor/home/screens/firestore_service.dart';
 import 'package:phychological_counselor/home/screens/speech_service.dart';
-import 'package:flutter/foundation.dart'; // <-- בשביל kIsWeb
+import 'package:flutter/foundation.dart'; 
 
 import '../../ai_chat/provider/chat_provider.dart';
 import '../../ai_chat/widgets/build_message.dart';
 import '../../ai_chat/widgets/chat_text_field.dart';
 import '../../ai_chat/widgets/send_button.dart';
-// <<<<<<< HEAD
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import '../../frontend/settings_panel.dart';
-
-// import 'package:flutter_tts/flutter_tts.dart'; // 🆕 להמרת טקסט לקול
-// =======
 import '../../frontend/settings_panel.dart';
 import '../../ai_chat/widgets/chat_history_sidebar.dart';
 // import 'package:phychological_counselor/services/python_api.dart'; // ← יבוא השירות
@@ -67,189 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
   bool _isRecording = false;
-// <<<<<<< HEAD
-//   final Record _audioRecorder = Record();
-//   final FlutterTts _flutterTts = FlutterTts(); // 🆕 Text to Speech
-
-//   html.MediaRecorder? _mediaRecorder;
-//   List<html.Blob> _audioChunks = [];
-//   bool _lastInputWasVoice = false; // 🆕 לדעת איך המשתמש שלח את ההודעה
-
-//   Future<void> _toggleRecording() async {
-//     print("🔴 כפתור ההקלטה נלחץ");
-
-//     if (kIsWeb) {
-//       if (_isRecording) {
-//         setState(() => _isRecording = false);
-//         final transcript = await stopWebRecordingAndConvertToText();
-//         await _saveMessageToFirestore(transcript);
-//         _lastInputWasVoice = true;
-//         _sendMessage(transcript);
-//       } else {
-//         await startWebRecording();
-//         setState(() => _isRecording = true);
-//       }
-//       return;
-//     }
-
-//     if (_isRecording) {
-//       String? path = await _audioRecorder.stop();
-//       setState(() => _isRecording = false);
-//       if (path != null) {
-//         String transcript = await convertAudioToText(path);
-//         await _saveMessageToFirestore(transcript);
-//         _lastInputWasVoice = true;
-//         _sendMessage(transcript);
-//       }
-//     } else {
-//       final dir = await getApplicationDocumentsDirectory();
-//       final filePath = p.join(
-//         dir.path,
-//         'recorded_audio_\${DateTime.now().millisecondsSinceEpoch}.m4a',
-//       );
-//       await _audioRecorder.start(
-//         path: filePath,
-//         bitRate: 128000,
-//         samplingRate: 44100,
-//       );
-//       setState(() => _isRecording = true);
-//     }
-//   }
-
-//   Future<void> startWebRecording() async {
-//     final stream = await html.window.navigator.mediaDevices!.getUserMedia({'audio': true});
-//     _mediaRecorder = html.MediaRecorder(stream);
-//     _audioChunks = [];
-
-//     _mediaRecorder!.addEventListener('dataavailable', (event) {
-//       final blob = (event as html.BlobEvent).data;
-//       if (blob != null) {
-//         _audioChunks.add(blob);
-//       }
-//     });
-
-//     _mediaRecorder!.start();
-//     print("🎙️ הקלטה התחילה בדפדפן");
-//   }
-
-//   Future<String> stopWebRecordingAndConvertToText() async {
-//     final completer = Completer<html.Blob>();
-
-//     _mediaRecorder!.addEventListener('stop', (_) {
-//       final fullBlob = html.Blob(_audioChunks);
-//       completer.complete(fullBlob);
-//     });
-
-//     _mediaRecorder!.stop();
-//     final blob = await completer.future;
-//     final reader = html.FileReader();
-//     reader.readAsArrayBuffer(blob);
-//     await reader.onLoad.first;
-//     final audioBytes = reader.result as List<int>;
-//     final base64Audio = base64Encode(audioBytes);
-//     return await convertAudioToTextFromWeb(base64Audio);
-//   }
-
-//   Future<void> _saveMessageToFirestore(String text) async {
-//     try {
-//       await FirebaseFirestore.instance.collection('messages').add({
-//         'text': text,
-//         'sender': 'user',
-//         'timestamp': FieldValue.serverTimestamp(),
-//       });
-//       print("✅ ההודעה נשמרה ב־Firebase: \$text");
-//     } catch (e) {
-//       print("❌ שגיאה בשמירה ל־Firebase: \$e");
-//     }
-//   }
-
-//   Future<void> _speak(String text) async {
-//     await _flutterTts.setLanguage("he-IL");
-//     await _flutterTts.setPitch(1);
-//     await _flutterTts.speak(text);
-//   }
-
-//   Future<String> convertAudioToText(String filePath) async {
-//     final bytes = await File(filePath).readAsBytes();
-//     final base64Audio = base64Encode(bytes);
-
-//     final response = await http.post(
-//       Uri.parse('https://speech.googleapis.com/v1/speech:recognize?key=AIzaSyAXP9fkCQUuWTcvMVHsSnz7rDQS7jxLoNg'),
-//       headers: {'Content-Type': 'application/json'},
-//       body: jsonEncode({
-//         "config": {
-//           "encoding": "WEBM_OPUS",
-//           "sampleRateHertz": 48000,
-//           "languageCode": "he-IL"
-//         },
-//         "audio": {"content": base64Audio}
-//       }),
-//     );
-
-//     if (response.statusCode == 200) {
-//       final data = jsonDecode(response.body);
-//       if (data['results'] != null && data['results'].isNotEmpty) {
-//         return data['results'][0]['alternatives'][0]['transcript'];
-//       } else {
-//         return "לא זוהתה הודעה קולית.";
-//       }
-//     } else {
-//       return "שגיאה בהמרת קול לטקסט.";
-//     }
-//   }
-
-//   Future<String> convertAudioToTextFromWeb(String base64Audio) async {
-//     final response = await http.post(
-//       Uri.parse('https://speech.googleapis.com/v1/speech:recognize?key=AIzaSyAXP9fkCQUuWTcvMVHsSnz7rDQS7jxLoNg'),
-//       headers: {'Content-Type': 'application/json'},
-//       body: jsonEncode({
-//         "config": {
-//           "encoding": "WEBM_OPUS",
-//           "sampleRateHertz": 48000,
-//           "languageCode": "he-IL"
-//         },
-//         "audio": {"content": base64Audio}
-//       }),
-//     );
-
-//     print("📡 קיבלנו תגובה מהשרת: \${response.statusCode}");
-//     print("📨 גוף התגובה: \${response.body}");
-
-//     if (response.statusCode == 200) {
-//       final data = jsonDecode(response.body);
-//       if (data['results'] != null && data['results'].isNotEmpty) {
-//         return data['results'][0]['alternatives'][0]['transcript'];
-//       } else {
-//         return "לא זוהתה הודעה קולית.";
-//       }
-//     } else {
-//       return "שגיאה בהמרת קול לטקסט.";
-//     }
-//   }
-
-//   Future<void> _sendMessage(String message) async {
-//     if (message.trim().isEmpty) return;
-//     final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-//     chatProvider.addMessage("user", message);
-
-//     await _saveMessageToFirestore(message);
-
-//     setState(() => _isLoading = true);
-//     _controller.clear();
-//     _scrollToBottom();
-
-//     final response = await getGPTResponse(message, '23');
-//     if (response != null) {
-//       chatProvider.addMessage("gpt", response);
-//       if (_lastInputWasVoice) {
-//         await _speak(response); // 🗣️ לקרוא בקול את התשובה
-//       }
-//     }
-
-//     setState(() => _isLoading = false);
-//     _scrollToBottom();
-//   }
-// =======
   bool _showAvatar = false;
   String? _userId; // ← משתנה גלובלי בתוך ה־State
 
@@ -478,24 +268,6 @@ Future<void> _sendMessage(String message) async {
                         ),
                       ),
                       _buildInputField(),
-                      // ElevatedButton(
-                        // onPressed: () async {
-                        //   try {
-                        //     final result = await PythonAPI.sendEcho("שלום מהצ'אט");
-                        //     print("✅ תשובה מהשרת: $result");
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(content: Text("שרת ענה: $result")),
-                        //     );
-                        //   } catch (e) {
-                        //     print("❌ שגיאה: $e");
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(content: Text("שגיאה בחיבור לשרת")),
-                        //     );
-                        //   }
-                        // },
-                        // child: Text("בדוק חיבור לשרת Python"),
-                      // ),
-
                       SizedBox(height: 20.h),
                     ],
                   ),
