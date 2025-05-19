@@ -26,7 +26,7 @@ class TherapyBotPage extends StatelessWidget {
             // ),
             SizedBox(height: 20),
             Text(
-              "Hey! I'm TherapyBot",
+              "Hey! I'm Counseling chatbot",
               style: TextStyle(
                 color: Colors.indigo.shade400,
                 fontSize: 24,

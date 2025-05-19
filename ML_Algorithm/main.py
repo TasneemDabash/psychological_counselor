@@ -25,7 +25,7 @@ X = embed_statements(df["statement"])
 y_scaled, scaler = scale_labels(df["label"].values)
 
 # Fit PCA and save it
-pca = PCA(n_components=128)
+pca = PCA(n_components=64)
 X = pca.fit_transform(X)
 save_model(pca, "ML_Algorithm/models/pca_transformer.pkl")
 

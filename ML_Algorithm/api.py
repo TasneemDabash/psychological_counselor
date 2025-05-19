@@ -27,27 +27,39 @@ db = firestore.client()
 
 app = Flask(__name__)
 
-@app.route("/predict", methods=["POST"])
-def predict():
+@app.route("/process_message", methods=["POST"])
+def process_message():
     try:
-        logger.info("Received prediction request")
+        logger.info("Received message processing request")
         data = request.get_json()
-        statement = data.get("statement")
+        message_id = data.get("messageId")
         user_id = data.get("userId")
 
-        if not statement or not user_id:
-            logger.error("Missing statement or userId")
-            return jsonify({"error": "Missing statement or userId"}), 400
+        if not message_id or not user_id:
+            logger.error("Missing messageId or userId")
+            return jsonify({"error": "Missing messageId or userId"}), 400
 
-        logger.info(f"Processing request for user {user_id}")
-        logger.info(f"Statement: {statement}")
+        logger.info(f"Processing message {message_id} for user {user_id}")
+
+        # Get the message from Firestore
+        message_doc = db.collection("messages").document(message_id).get()
+        if not message_doc.exists:
+            logger.error(f"Message not found: {message_id}")
+            return jsonify({"error": "Message not found"}), 404
+
+        message_data = message_doc.to_dict()
+        statement = message_data.get("text")
+
+        if not statement:
+            logger.error("Message has no text content")
+            return jsonify({"error": "Message has no text content"}), 400
 
         # Get user data
         user_docs = db.collection("users").where("userID", "==", user_id).get()
         if not user_docs:
             logger.error(f"User not found: {user_id}")
             return jsonify({"error": "User not found"}), 404
-        
+
         user_data = user_docs[0].to_dict()
         logger.info("User data retrieved successfully")
 
@@ -64,12 +76,21 @@ def predict():
         rounded_prediction = round(prediction, 2)
         logger.info(f"Prediction score: {rounded_prediction}")
 
-        # Store prediction data
+        # Update the message document with prediction
+        logger.info("Updating message with prediction...")
+        db.collection("messages").document(message_id).update({
+            "predictionScore": rounded_prediction,
+            "prediction": rounded_prediction,
+            "processedAt": firestore.SERVER_TIMESTAMP
+        })
+
+        # Store prediction data in user_predictions collection
         prediction_data = {
             "userId": user_id,
             "statement": statement,
             "predictedScore": rounded_prediction,
             "timestamp": firestore.SERVER_TIMESTAMP,
+            "messageId": message_id,
             "userDetails": {
                 "firstName": user_data.get("firstName", ""),
                 "lastName": user_data.get("lastName", ""),
@@ -84,13 +105,51 @@ def predict():
         logger.info("Prediction stored successfully")
 
         return jsonify({
+            "messageId": message_id,
             "prediction": rounded_prediction,
             "userId": user_id,
             "timestamp": datetime.now().isoformat()
         })
 
     except Exception as e:
-        logger.error(f"Error processing request: {str(e)}")
+        logger.error(f"Error processing message: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+# --------- Test messages (pulled from Firestore) ---------
+@app.route("/test", methods=["GET"])
+def test_process():
+    try:
+        logger.info("Fetching test messages from Firestore...")
+        query = db.collection("messages").limit(5).get()
+        results = []
+
+        for doc in query:
+            data = doc.to_dict()
+            text = data.get("text")
+            if not text:
+                continue
+
+            embedding = labse.encode([text])
+            embedding_reduced = pca.transform(embedding)
+            pred_scaled = model.predict(embedding_reduced)
+            prediction = float(scaler.inverse_transform([[pred_scaled[0]]])[0][0])
+            rounded_prediction = round(prediction, 2)
+
+            # Also update the message with a test prediction field
+            db.collection("messages").document(doc.id).update({
+                "prediction": rounded_prediction
+            })
+
+            results.append({
+                "messageId": doc.id,
+                "statement": text,
+                "prediction": rounded_prediction
+            })
+
+        return jsonify(results)
+
+    except Exception as e:
+        logger.error(f"Error during test message processing: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
