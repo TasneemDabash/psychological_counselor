@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:phychological_counselor/home/screens/home_screen.dart'; // היבוא של home_screen.dart
 import 'package:phychological_counselor/frontend/SignUpPage.dart';  // היבוא של SignUpPage
-//import 'package:phychological_counselor/frontend/profile_page.dart';
 import 'package:phychological_counselor/main/navigation/routes/name.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:phychological_counselor/frontend/reset_password_page.dart';
 import 'package:phychological_counselor/frontend/reset_password_page.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
 
   Future<void> _login() async {
   FocusScope.of(context).unfocus(); // סגור מקלדת
@@ -41,27 +39,6 @@ class _HomePageState extends State<HomePage> {
     return;
   }
     print("Trying login with email: $email");
-
-
-// <<<<<<< HEAD
-//   try {
-//         print("Running Firestore query...");
-
-//     final userDoc = await FirebaseFirestore.instance
-//         .collection('users')
-//         .where('email', isEqualTo: email)
-//         .get();
-//          print("Query complete");
-//     print("Number of users found: ${userDoc.docs.length}");
-
-
-//   if (userDoc.docs.isEmpty) {
-//   showDialog(
-//     context: context,
-//     builder: (_) => AlertDialog(
-//       title: Text('User Not Found'),
-//       content: Text('No user found with this email'),
-// =======
  try {
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: email,
@@ -76,31 +53,42 @@ class _HomePageState extends State<HomePage> {
     print("❌ FirebaseAuth Login Error: $e");
 
     showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text('Login Failed'),
-        content: Text('Error: ${e.message}'),
+  context: context,
+    barrierColor: Colors.black.withOpacity(0.2), // ← רקע שקוף בהיר
 
+  builder: (_) => Center(
+    child: SizedBox(
+      width: 300, // ← גודל הקופסה
+      child: AlertDialog(
+        backgroundColor: Colors.grey[200], // ✅ צבע הרקע של הקופסה עצמה
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16), // ← פינות מעוגלות
+        ),
+        title: Text(
+          'Login Failed',
+          style: TextStyle(color: Colors.black87, fontSize: 18),
+        ),
+        content: Text(
+          'Error: ${e.message}',
+          style: TextStyle(color: Colors.black, fontSize: 14),
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('OK')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'OK',
+style: TextStyle(
+      color: Colors.indigo, // ✅ צבע טקסט סגול
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    ),            ),
+          ),
         ],
       ),
-    );
-// <<<<<<< HEAD
-//   return;
-// }
+    ),
+  ),
+);
 
-//     final userData = userDoc.docs.first.data();
-//         print("User data from Firestore: $userData");
-
-//     if (userData['password'] == password) {
-//       // הצלחה → מעבר לצ'אט
-//       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
-//     } else {
-//       throw Exception('Incorrect password');
-//     }
-//   } catch (e) {
-// =======
   }catch (e) {
       showDialog(
         context: context,
@@ -140,8 +128,6 @@ Future<void> manualLoginTest() async {
     );
   }
 }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,36 +186,50 @@ Future<void> manualLoginTest() async {
                           borderSide: BorderSide(color: Colors.indigo.shade400),
                         ),
                       ),
+                        cursorColor: Colors.indigo.shade400, // ✅ הוסיפי שורה זו
+
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-                MouseRegion(
-                  onEnter: (event) => {},
-                  onExit: (event) => {},
-                  child: Container(
-                    width: 250,
-                      height: 45, // ✅ חדש: גובה קטן יותר
+              MouseRegion(
+  onEnter: (event) => {},
+  onExit: (event) => {},
+  child: Container(
+    width: 250,
+    height: 45,
+    child: TextField(
+      controller: _passwordController,
+      obscureText: _obscurePassword,
+      style: TextStyle(color: Colors.black, fontSize: 13),
+      cursorColor: Colors.indigo.shade400,
+        onSubmitted: (_) => _login(), // ✅ הוסיפי את זה כאן
 
-                    child: TextField(
-                      style: TextStyle(color: Colors.black),
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(color: Colors.indigo.shade400 , fontSize: 14 // או אפילו 12 אם את רוצה קטן יותר
+      decoration: InputDecoration(
+        labelText: 'Password',
+        labelStyle: TextStyle(color: Colors.indigo.shade400, fontSize: 14),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.indigo.shade400),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.indigo.shade400),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscurePassword = !_obscurePassword;
+            });
+          },
+        ),
+      ),
+    ),
+  ),
 ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.indigo.shade400),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.indigo.shade400),
-                        ),
-                      ),
-                      obscureText: true,
-                    ),
-                  ),
-                ),
-                // כפתור Login
+
                 
  Container(
   width: 300, // אותו רוחב כמו תיבות הטקסט
@@ -267,15 +267,6 @@ SizedBox(
   ),
 ),
 SizedBox(height: 10), // ← מוסיף רווח אנכי של 10 פיקסלים
-
-//ElevatedButton(
-//   onPressed: manualLoginTest,
-//   child: Text('🔍 בדוק התחברות ידנית'),
-// ),
-
-
-
-             // כפתור Sign Up
 SizedBox(
   width: 70,
   height: 30,

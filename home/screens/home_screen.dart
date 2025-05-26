@@ -14,6 +14,7 @@ import 'package:phychological_counselor/home/screens/audio_handler.dart';
 import 'package:phychological_counselor/home/screens/firestore_service.dart';
 import 'package:phychological_counselor/home/screens/speech_service.dart';
 import 'package:flutter/foundation.dart'; 
+import 'package:phychological_counselor/frontend/home_screenDesign2.dart';
 
 import '../../ai_chat/provider/chat_provider.dart';
 import '../../ai_chat/widgets/build_message.dart';
@@ -21,8 +22,6 @@ import '../../ai_chat/widgets/chat_text_field.dart';
 import '../../ai_chat/widgets/send_button.dart';
 import '../../frontend/settings_panel.dart';
 import '../../ai_chat/widgets/chat_history_sidebar.dart';
-// import 'package:phychological_counselor/services/python_api.dart'; // ← יבוא השירות
-// import 'package:phychological_counselor/backend/python_ml_api.dart';
 import 'package:phychological_counselor/frontend/home_screenDesign.dart';
 
 
@@ -293,33 +292,10 @@ Future<void> _sendMessage(String message) async {
             
           ),
         ],
-      ),
 
-      // ✅ אייקון פרופיל בפינה הימנית העליונה
-      // Positioned(
-      //   top: 16,
-      //   right: 16,
-      //   child: IconButton(
-      //     icon: const Text('👤', style: TextStyle(fontSize: 26)),
-      //     onPressed: () {
-      //       // כאן את יכולה להחליף ב־_showProfileDialog אם יש לך אותו
-      //       showDialog(
-      //         context: context,
-      //         builder: (context) => AlertDialog(
-      //           title: const Text("👤 My Profile"),
-      //           content: const Text("כאן יופיע פרופיל המשתמש המלא."),
-      //           actions: [
-      //             TextButton(
-      //               onPressed: () => Navigator.of(context).pop(),
-      //               child: const Text("סגור"),
-      //             ),
-      //           ],
-      //         ),
-      //       );
-      //     },
-      //   ),
-      // ),
+      ),
                 const HomeScreenDesign(),
+                  const HomeScreenDesign2(),
 
     ],
   ),

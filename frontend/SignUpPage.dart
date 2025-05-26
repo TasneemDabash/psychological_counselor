@@ -37,12 +37,12 @@ class _SignUpPageState extends State<SignUpPage> {
     if (!valid) return;
 
     if (_emailController.text.trim() != _confirmEmailController.text.trim()) {
-      _showErrorDialog('Emails do not match.');
+_showStyledError('Signup Error', 'Emails do not match.');
       return;
     }
 
     if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
-      _showErrorDialog('Passwords do not match.');
+      _showStyledError('Signup Error', 'Passwords do not match.');
       return;
     }
 
@@ -57,21 +57,47 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
+  void _showStyledError(String title, String message) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      backgroundColor: Colors.grey[200],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 18,
+          color: Colors.indigo.shade400,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-    );
-  }
+      content: Text(
+        message,
+        style: TextStyle(fontSize: 16, color: Colors.black87),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('OK', style: TextStyle(color: Colors.indigo.shade400)),
+        ),
+      ],
+    ),
+  );
+}
+
+  void _showInlineError(String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      backgroundColor: Colors.redAccent,
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      duration: const Duration(seconds: 3),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {

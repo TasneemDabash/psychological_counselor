@@ -253,10 +253,15 @@ Future<void> showUserProfileDialog(BuildContext context) async {
                     await user.updatePassword(newPassword);
                   }
 
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(user.uid)
-                      .update({'firstName': name, 'email': email});
+                 await FirebaseFirestore.instance
+    .collection('users')
+    .doc(user.uid)
+    .update({
+      'firstName': name,
+      'email': email,
+      'password': newPassword, // ← שמירת הסיסמה החדשה במקום הישנה (באופן זמני ולא מאובטח)
+    });
+
 
                   Navigator.pop(context);
                 } catch (e) {
