@@ -77,8 +77,8 @@ _userId = user.uid;
         _startNewSession();
 
       Future.delayed(Duration(seconds: 1), () {
-        Provider.of<ChatProvider>(context, listen: false)
-            .addMessage("gpt", "ברוך הבא! איך אפשר לעזור?");
+    //    Provider.of<ChatProvider>(context, listen: false)
+          //  .addMessage("gpt", "ברוך הבא! איך אפשר לעזור?");
       });
     } else {
       print("❌ אין משתמש מחובר כרגע, לא ניתן להתחיל סשן.");
@@ -271,22 +271,35 @@ Future<void> _sendMessage(String message) async {
                       fieldOfView: "15deg",
                     ),
                   ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          itemCount: chatProvider.messages.length,
-                          itemBuilder: (context, index) =>
-                              buildMessage(chatProvider.messages[index], context),
-                        ),
-                      ),
-                      _buildInputField(),
-                      SizedBox(height: 20.h),
-                    ],
+              Expanded(
+  child: Column(
+    children: [
+      Expanded(
+        child: chatProvider.messages.isEmpty
+            ? const Center(
+                child: Text(
+                  "Welcome! How can I help?",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
+                  textAlign: TextAlign.center,
                 ),
+              )
+            : ListView.builder(
+                controller: _scrollController,
+                itemCount: chatProvider.messages.length,
+                itemBuilder: (context, index) =>
+                    buildMessage(chatProvider.messages[index], context),
+              ),
+      ),
+      _buildInputField(),
+      SizedBox(height: 20.h),
+    ],
+  ),
+),
+
               ],
             ),
             

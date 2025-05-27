@@ -44,15 +44,13 @@ class _HomeScreenDesignState extends State<HomeScreenDesign> {
     );
   }
 
+
  @override
 Widget build(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser;
 
   return Stack(
     children: [
-      // שים כאן את תוכן המסך הרגיל (אפשר גם להשאיר ריק או להעביר חלקים אחרים)
-
-      // Positioned האימוג'י + תפריט
       Positioned(
         top: 16,
         right: 16,
@@ -70,7 +68,6 @@ Widget build(BuildContext context) {
   color: Colors.indigo.shade400, // 💜 הצבע הרצוי
   size: 28,
 ),
-
             ),
             if (_menuOpen)
               Material(
@@ -119,7 +116,6 @@ Widget build(BuildContext context) {
     ),
   ),
 ),
-
                     ],
                   ),
                 ),
@@ -133,7 +129,7 @@ Widget build(BuildContext context) {
 
 Widget _menuItem(String text, VoidCallback onTap, {TextStyle? style}) {
   return MouseRegion(
-    cursor: SystemMouseCursors.click, // 🖱️ שינוי צורת העכבר
+    cursor: SystemMouseCursors.click, 
     child: GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -146,8 +142,6 @@ Widget _menuItem(String text, VoidCallback onTap, {TextStyle? style}) {
     ),
   );
 }
-
-
 }
 
 class MyProfileOnly extends StatelessWidget {
@@ -228,46 +222,77 @@ Future<void> showUserProfileDialog(BuildContext context) async {
           ),
           actions: [
             ElevatedButton(
-              onPressed: () async {
-                final name = _nameController.text.trim();
-                final email = _emailController.text.trim();
-                final currentPassword = _currentPassController.text.trim();
-                final newPassword = _newPassController.text.trim();
-                final confirmPassword = _confirmPassController.text.trim();
+             onPressed: () async {
+  final name = _nameController.text.trim();
+  final email = _emailController.text.trim();
+  final currentPassword = _currentPassController.text.trim();
+  final newPassword = _newPassController.text.trim();
+  final confirmPassword = _confirmPassController.text.trim();
 
-                try {
-                  if (newPassword.isNotEmpty) {
-                    if (newPassword != confirmPassword) {
-                      showError(context, 'New password and confirm password must match.');
-                      return;
-                    }
+  if (name.isEmpty || email.isEmpty) {
+    showError(context, ' The name and email fields cannot be empty.');
+    return;
+  }
+  if (!isEmailValid(email)) {
+  showError(context, 'The email address is invalid. Please try again.');
+  return;
+}
 
-                    if (!isPasswordStrong(newPassword)) {
-                      showError(context, 'Password must be 8+ characters with letters, numbers & symbols.');
-                      return;
-                    }
 
-                    final cred = EmailAuthProvider.credential(
-                        email: user.email!, password: currentPassword);
-                    await user.reauthenticateWithCredential(cred);
-                    await user.updatePassword(newPassword);
-                  }
+  try {
+if (newPassword.isNotEmpty || confirmPassword.isNotEmpty) {
+  if (newPassword.isEmpty) {
+    showError(context, 'A new password must be entered before entering password verification.');
+    return;
+  }
+       if (currentPassword.isEmpty) {
+    showError(context, 'יש להזין את הסיסמה הנוכחית.');
+    return;
+  }
+      if (currentPassword.isEmpty) {
+        showError(context, 'Please enter the current password.');
+        return;
+      }
 
-                 await FirebaseFirestore.instance
-    .collection('users')
-    .doc(user.uid)
-    .update({
+      // 🔴 בדיקה: אימות מול Firebase
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: currentPassword,
+      );
+      await user.reauthenticateWithCredential(cred);
+
+      // 🔴 בדיקה: התאמה בין הסיסמה החדשה לאימות שלה
+      if (newPassword != confirmPassword) {
+        showError(context, 'The new password and confirm password do not match.');
+        return;
+      }
+
+      // 🔴 בדיקה: האם הסיסמה חזקה
+      if (!isPasswordStrong(newPassword)) {
+        showError(context, 'The password must contain at least 8 characters, letters, numbers & symbols.');
+        return;
+      }
+      
+
+      // ✅ עדכון סיסמה בפועל
+      await user.updatePassword(newPassword);
+    }
+ 
+
+
+    // ✅ עדכון פרטים אחרים (שם, אימייל)
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'firstName': name,
       'email': email,
-      'password': newPassword, // ← שמירת הסיסמה החדשה במקום הישנה (באופן זמני ולא מאובטח)
+      if (newPassword.isNotEmpty) 'password': newPassword, // זמני
     });
 
+    Navigator.pop(context);
+  } catch (e) {
+    showError(context, 'Authentication error: The current password is incorrect.');
+  }
+},
 
-                  Navigator.pop(context);
-                } catch (e) {
-                  showError(context, 'Failed to update: ${e.toString()}');
-                }
-              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.indigo.shade400,
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
@@ -324,15 +349,39 @@ bool isPasswordStrong(String password) {
   final regex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$');
   return regex.hasMatch(password);
 }
-
+ bool isEmailValid(String email) {
+  final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  return regex.hasMatch(email);
+}
 void showError(BuildContext context, String message) {
   showDialog(
     context: context,
     builder: (_) => AlertDialog(
-      title: const Text("❌ Error"),
-      content: Text(message),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Row(
+        children: const [
+          Icon(Icons.error_outline, color: Colors.redAccent),
+          SizedBox(width: 10),
+          Text(
+            "Error Updating",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.redAccent,
+            ),
+          ),
+        ],
+      ),
+      content: Text(
+        message,
+        style: const TextStyle(fontSize: 16, color: Colors.black87),
+      ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text("Close")),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text("close", style: TextStyle(color: Colors.indigo,fontSize:16)),
+        ),
       ],
     ),
   );
