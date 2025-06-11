@@ -4,9 +4,7 @@ import 'package:phychological_counselor/home/screens/home_screen.dart'; // הי�
 import 'package:phychological_counselor/frontend/SignUpPage.dart';  // היבוא של SignUpPage
 import 'package:phychological_counselor/main/navigation/routes/name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:phychological_counselor/frontend/reset_password_page.dart';
-import 'package:phychological_counselor/frontend/reset_password_page.dart';
-
+import 'package:phychological_counselor/frontend/reset_password_dialog.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -232,22 +230,20 @@ Future<void> manualLoginTest() async {
 
                 
  Container(
-  width: 300, // אותו רוחב כמו תיבות הטקסט
-  alignment: Alignment.centerRight, // יישור פנימי לימין
+  width: 300,
+  alignment: Alignment.centerRight,
   child: TextButton(
     onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ResetPasswordPage()),
-      );
+      showResetPasswordDialog(context); // ✅ תיבת דיאלוג במקום מעבר לעמוד חדש
     },
     child: Text(
-      'Forgot your password?',
-      style: TextStyle(
-        color: Colors.indigo.shade400,
-        fontSize: 14,
-      ),
-    ),
+  'Forgot Password?',
+  style: TextStyle(
+    color: Colors.indigo,
+    fontSize: 12, // כאן קובעים את הגודל הקטן יותר
+  ),
+),
+
   ),
 ),
 

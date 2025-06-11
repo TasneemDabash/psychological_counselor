@@ -9,6 +9,11 @@ Widget buildMessage(Map<String, String> message, BuildContext context) {
   final messageText = message["text"] ?? "";
 
   return Container(
+    constraints: BoxConstraints(
+        // נגבילו למקסימום 70% מרוחב המסך. אפשר לכוונן לפי הטעם.
+        maxWidth: MediaQuery.of(context).size.width * 0.4,
+       // maxHeight: 150.0,  
+      ),
     margin: EdgeInsets.symmetric(horizontal: 12.w),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,8 +25,9 @@ Widget buildMessage(Map<String, String> message, BuildContext context) {
               isUserMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(12.w),
-              constraints: BoxConstraints(maxWidth: 230.w),
+              
+              padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
+              constraints: BoxConstraints(maxWidth: 150.w),
               decoration: BoxDecoration(
                 color: isUserMessage
                 
@@ -40,7 +46,7 @@ Widget buildMessage(Map<String, String> message, BuildContext context) {
                 styleSheet:
                     MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
                   p: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 14.sp,
+                        fontSize: 5.sp,
 
                         color: Colors.black, // ✅ טקסט שחור תמיד
                         fontFamily: 'NotoSansHebrew', // ✅ הוספת שם הפונט

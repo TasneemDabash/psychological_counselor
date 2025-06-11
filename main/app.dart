@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      
       providers: [
         ...AppPage.allBlocProviders(context),
         ChangeNotifierProvider(create: (_) => ChatProvider()),

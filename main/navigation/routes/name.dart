@@ -8,6 +8,7 @@ class AppRoutes{
   static const forgetNotification="/forget_notification";
   // static const application="/application";
   static const home="/home";
+  static const verifyEmail    = '/verify-email';  // ← הוסיפי שורה זו
   static const settings="/settings";
   static const draft="/draft";
   static const denoise="/denoise";

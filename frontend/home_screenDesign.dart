@@ -168,7 +168,7 @@ Future<void> showUserProfileDialog(BuildContext context) async {
   final userData = docSnap.data();
 
   final _nameController = TextEditingController(text: userData?['firstName'] ?? '');
-  final _emailController = TextEditingController(text: userData?['email'] ?? '');
+  //final _emailController = TextEditingController(text: userData?['email'] ?? '');
   final _currentPassController = TextEditingController();
   final _newPassController = TextEditingController();
   final _confirmPassController = TextEditingController();
@@ -191,7 +191,7 @@ Future<void> showUserProfileDialog(BuildContext context) async {
               child: Column(
                 children: [
                   _buildTextField(_nameController, 'Name'),
-                  _buildTextField(_emailController, 'Email'),
+                //  _buildTextField(_emailController, 'Email'),
                   const SizedBox(height: 10),
                   const Align(
                     alignment: Alignment.centerLeft,
@@ -224,19 +224,19 @@ Future<void> showUserProfileDialog(BuildContext context) async {
             ElevatedButton(
              onPressed: () async {
   final name = _nameController.text.trim();
-  final email = _emailController.text.trim();
+  //final email = _emailController.text.trim();
   final currentPassword = _currentPassController.text.trim();
   final newPassword = _newPassController.text.trim();
   final confirmPassword = _confirmPassController.text.trim();
 
-  if (name.isEmpty || email.isEmpty) {
-    showError(context, ' The name and email fields cannot be empty.');
+  if (name.isEmpty) {
+    showError(context, ' The name field cannot be empty.');
     return;
   }
-  if (!isEmailValid(email)) {
-  showError(context, 'The email address is invalid. Please try again.');
-  return;
-}
+//   if (!isEmailValid(email)) {
+//   showError(context, 'The email address is invalid. Please try again.');
+//   return;
+// }
 
 
   try {
@@ -283,7 +283,7 @@ if (newPassword.isNotEmpty || confirmPassword.isNotEmpty) {
     // ✅ עדכון פרטים אחרים (שם, אימייל)
     await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'firstName': name,
-      'email': email,
+    //  'email': email,
       if (newPassword.isNotEmpty) 'password': newPassword, // זמני
     });
 
