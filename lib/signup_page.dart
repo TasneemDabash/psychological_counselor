@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
         SnackBar(content: Text('Sign Up successful!')),
       );
 
-      Navigator.pop(context); // חזרה למסך הקודם לאחר הצלחה
+      Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign Up failed: $e')),
