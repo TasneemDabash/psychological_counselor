@@ -49,6 +49,3 @@ app.*.map.json
 .venv/
 /ML_Algorithm/therapyrobot-a8d2f-firebase-adminsdk-4nmam-0014eeaa1f.json
 .vercel
-
-
-/vercel-deploy

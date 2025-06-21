@@ -24,7 +24,7 @@ class AudioHandler {
         final blob = (event as html.BlobEvent).data;
         if (blob != null) _audioChunks.add(blob);
       });
-      _mediaRecorder!.start();
+      _mediaRecorder?.start();
     } else {
       final dir = await getApplicationDocumentsDirectory();
       final path = p.join(dir.path, 'audio_${DateTime.now().millisecondsSinceEpoch}.m4a');
@@ -38,7 +38,7 @@ class AudioHandler {
       _mediaRecorder!.addEventListener('stop', (_) {
         completer.complete(html.Blob(_audioChunks));
       });
-      _mediaRecorder!.stop();
+      _mediaRecorder?.stop();
       final blob = await completer.future;
       final reader = html.FileReader();
       reader.readAsArrayBuffer(blob);

@@ -15,7 +15,7 @@ class ChatHistorySidebar extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final sessions = snapshot.data!.docs;
+        final sessions = snapshot.data?.docs ?? [];
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

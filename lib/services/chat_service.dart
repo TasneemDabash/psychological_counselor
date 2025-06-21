@@ -17,7 +17,7 @@ class ChatService {
 
     if (message.trim().isEmpty) return;
 
-    final String currentUserId = _auth.currentUser!.uid;
+    final String? currentUserId = _auth.currentUser?.uid;
     final Timestamp timestamp = Timestamp.now();
 
     try {
@@ -125,7 +125,7 @@ class ChatService {
   }
 
   Stream<QuerySnapshot> getMessages() {
-    final String currentUserId = _auth.currentUser!.uid;
+    final String? currentUserId = _auth.currentUser?.uid;
     return _firestore
         .collection('messages')
         .where('userId', isEqualTo: currentUserId)

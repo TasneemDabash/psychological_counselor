@@ -46,7 +46,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   Future<void> _saveUserData(User user) async {
-    final args = ModalRoute.of(context)!.settings.arguments
+    final args = ModalRoute.of(context)?.settings.arguments
         as Map<String, dynamic>;
     await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'firstName': args['firstName'],

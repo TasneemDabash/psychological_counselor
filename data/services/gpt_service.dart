@@ -23,7 +23,7 @@ void initializeThread(String threadId, [List<Map<String, String>>? previousMessa
     conversationMap[threadId] = List<Map<String, String>>.from(baseSystemPrompt);
 
     if (previousMessages != null && previousMessages.isNotEmpty) {
-      conversationMap[threadId]!.addAll(previousMessages);
+      conversationMap[threadId]?.addAll(previousMessages);
     }
   }
 }
@@ -36,7 +36,7 @@ Future<String?> getGPTResponse(String userMessage, String threadId) async {
     initializeThread(threadId);
   }
 
-  conversationMap[threadId]!.add({'role': 'user', 'content': userMessage});
+  conversationMap[threadId]?.add({'role': 'user', 'content': userMessage});
   trimMessageHistory(conversationMap[threadId]!);
 
   try {
@@ -68,7 +68,7 @@ Future<String?> getGPTResponse(String userMessage, String threadId) async {
 // print("🧵 מזהה thread: $threadId");
 // print("📝 תוכן ההודעה: $userMessage");
 
-      conversationMap[threadId]!.add({'role': 'assistant', 'content': gptResponse});
+      conversationMap[threadId]?.add({'role': 'assistant', 'content': gptResponse});
 
       return gptResponse;
     } else {

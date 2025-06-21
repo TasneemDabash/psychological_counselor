@@ -63,8 +63,7 @@ class ReusableButton extends StatelessWidget {
                     Text(
                       text,
                       textAlign: TextAlign.center,
-                      style:
-                          textTheme.titleSmall!.copyWith(color: Colors.white),
+                      style: textTheme.titleSmall?.copyWith(color: Colors.white) ?? TextStyle(color: Colors.white),
                     ),
                     if (isIcon && iconAssetPath != null)
                       Padding(
