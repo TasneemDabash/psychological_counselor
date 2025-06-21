@@ -296,7 +296,7 @@ if (newPassword.isNotEmpty || confirmPassword.isNotEmpty) {
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.indigo.shade400,
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5)),
-              child: const Text('Save', style: TextStyle(color: Colors.white, fontSize: 18)),
+              child: const Text('Save', style: TextStyle(color: Colors.green, fontSize: 18)),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -357,7 +357,7 @@ void showError(BuildContext context, String message) {
   showDialog(
     context: context,
     builder: (_) => AlertDialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.green,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Row(
         children: const [

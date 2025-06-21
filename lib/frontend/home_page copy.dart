@@ -130,10 +130,10 @@ Future<void> manualLoginTest() async {
   Widget build(BuildContext context) {
     return Scaffold(
         
-  backgroundColor: Colors.white, // ← הוסיפי שורה זו
+  backgroundColor: Colors.green, // ← הוסיפי שורה זו
 
       appBar: AppBar(
-  backgroundColor: Colors.white,     // צבע רקע לבן
+  backgroundColor: Colors.green,     // צבע רקע לבן
   elevation: 0,                      // אין צל בכלל
   centerTitle: true,                // אם את רוצה ליישר את הכותרת למרכז
   iconTheme: IconThemeData(color: Colors.black), // ← צבע חץ אחורה (אם יש)

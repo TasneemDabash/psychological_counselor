@@ -25,13 +25,13 @@ class AppColors {
   static const Color error = Color(0xFFFF003C);
 
   /// App background color - set to white
-  static const Color background = Color(0xFFFFFFFF); // White background
+  static const Color background = Color(0xFFA0A4A8); // White background   // changing this for vercel deploy
 
   /// App shadow color
   static const Color shadow = Color.fromRGBO(0, 0, 0, 0.0);
 
   /// App surface color - adjusted to light grey for contrast
-  static const Color surface = Color(0xFF000000); // Light grey surface
+  static const Color surface = Color(0xFFA0A4A8); // Light grey surface
 
   /// App disable color
   static const Color disable =

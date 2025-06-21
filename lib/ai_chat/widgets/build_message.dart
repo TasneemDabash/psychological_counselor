@@ -43,7 +43,8 @@ Widget buildMessage(Map<String, String> message, BuildContext context) {
                         fontSize: 14.sp,
 
                         color: Colors.black, // ✅ טקסט שחור תמיד
-                        fontFamily: 'NotoSansHebrew', // ✅ הוספת שם הפונט
+                        // fontFamily: 'NotoSansHebrew', // ✅ הוספת שם הפונט  changing it for vercel
+                        fontFamily: 'Roboto',
 
                       ),
                   strong: Theme.of(context).textTheme.bodyMedium!.copyWith(

@@ -49,7 +49,8 @@ class ChatTextField extends StatelessWidget {
           //       .copyWith(color: AppColors.background),
 
           style: TextStyle(
-            fontFamily: 'NotoSansHebrew', // פונטים דמויי ChatGPT
+            // fontFamily: 'NotoSansHebrew', // פונטים דמויי ChatGPT   changing it for vercel
+            fontFamily: 'Roboto',
             color: Colors.black,
             fontSize: 15.sp,
             fontWeight: FontWeight.w400,
@@ -58,7 +59,8 @@ class ChatTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: "Type your message...",
             hintStyle: TextStyle(
-              fontFamily: 'NotoSansHebrew',
+              // fontFamily: 'NotoSansHebrew',   changing it for vercel
+              fontFamily: 'Roboto',
               color: Colors.grey,
               fontSize: 15.sp,
               fontWeight: FontWeight.w400,

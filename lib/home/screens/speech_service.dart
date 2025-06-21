@@ -89,32 +89,32 @@ class SpeechService {
     }
   }
 
-  Future<String> runAttributionFlow({
-    required String event,
-    required String emotion,
-    required String reason,
-  }) async {
-    try {
-      final response = await http.post(
-        Uri.parse("http://127.0.0.1:5000/attribution"),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'event': event,
-          'emotion': emotion,
-          'reason': reason,
-        }),
-      );
+  // Future<String> runAttributionFlow({
+  //   required String event,
+  //   required String emotion,
+  //   required String reason,
+  // }) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse("http://127.0.0.1:5000/attribution"),
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: jsonEncode({
+  //         'event': event,
+  //         'emotion': emotion,
+  //         'reason': reason,
+  //       }),
+  //     );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data['response'] ?? '⚠️ No response';
-      } else {
-        return "❌ Server error: ${response.statusCode}";
-      }
-    } catch (e) {
-      return "⚠️ Attribution request failed: $e";
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       return data['response'] ?? '⚠️ No response';
+  //     } else {
+  //       return "❌ Server error: ${response.statusCode}";
+  //     }
+  //   } catch (e) {
+  //     return "⚠️ Attribution request failed: $e";
+  //   }
+  // }
 
   void _initializeThread(String threadId, [List<Map<String, String>>? previous]) {
     _conversationMap[threadId] = List<Map<String, String>>.from(_baseSystemPrompt);
