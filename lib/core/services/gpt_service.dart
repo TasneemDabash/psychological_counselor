@@ -18,7 +18,7 @@ Future<String?> getGPTResponse(String userMessage, String userId) async {
     body: jsonEncode({
       'model': 'gpt-3.5-turbo',
       'messages': [
-        {'role': 'system', 'content': 'You are a helpful and optimistic therapist bot. Always transform negative thinking into hopeful messages.'},
+        {'role': 'system', 'content': "Hi {NAME}, I'm Hewar, an AI-based assistant designed to help you deeply understand and process the negative events and situations you encounter in daily life. In our conversations, we'll try to break down and analyze these situations and identify thinking patterns in a way that helps you expand your perspective on negative life experiences."},
         {'role': 'user', 'content': userMessage}
       ],
     }),

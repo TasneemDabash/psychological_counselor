@@ -8,9 +8,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:phychological_counselor/frontend/signup_steps.dart';
-import 'package:phychological_counselor/frontend/validation.dart';
-import 'package:phychological_counselor/frontend/firestore_helper.dart';
-import 'package:phychological_counselor/frontend/email_validator.dart';
+// import 'package:phychological_counselor/frontend/validation.dart';
+// import 'package:phychological_counselor/frontend/firestore_helper.dart';
+// import 'package:phychological_counselor/frontend/email_validator.dart';
 
 
 
@@ -62,15 +62,15 @@ class _SignUpPageState extends State<SignUpPage> {
 //     if (!_validateCurrentStep()) return;
 
 // =======
-  void _nextStep() {
-    if (!_validateCurrentStep()) return;
+  // void _nextStep() {
+  //   if (!_validateCurrentStep()) return;
 
-    setState(() {
-      _currentStep++;
-    });
-  }
+  //   setState(() {
+  //     _currentStep++;
+  //   });
+  // }
 
-  bool _validateCurrentStep() {
+  // bool _validateCurrentStep() {
 // <<<<<<< HEAD
 //     switch (_currentStep) {
 //       case 0:
@@ -221,25 +221,26 @@ class _SignUpPageState extends State<SignUpPage> {
 //       obscureText: obscureText,
 //       keyboardType: keyboardType,
 // =======
-    return validateStep(
-      step: _currentStep,
-      context: context,
-      firstNameController: _firstNameController,
-      lastNameController: _lastNameController,
-      emailController: _emailController,
-      confirmEmailController: _confirmEmailController,
-      ageController: _ageController,
-      genderController: _genderController,
-      passwordController: _passwordController,
-      confirmPasswordController: _confirmPasswordController,
-    );
-  }
+    // return validateStep(
+    //   step: _currentStep,
+    //   context: context,
+    //   firstNameController: _firstNameController,
+    //   lastNameController: _lastNameController,
+    //   emailController: _emailController,
+    //   confirmEmailController: _confirmEmailController,
+    //   ageController: _ageController,
+    //   genderController: _genderController,
+    //   passwordController: _passwordController,
+    //   confirmPasswordController: _confirmPasswordController,
+    // );
+  // }
 
   void _signUp() async {
     final email = _emailController.text.trim();
 
   // שלב 1: בדיקה אם האימייל אמיתי ונשלח
-  final isValid = await isRealEmail(email);
+  // final isValid = await isRealEmail(email);
+  final isValid = true;
   if (!isValid) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('האימייל אינו תקף או לא ניתן לשלוח אליו')),
@@ -248,16 +249,16 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
  
-  await signUpAndSaveUser(
-      context: context,
-      firstName: _firstNameController.text.trim(),
-      lastName: _lastNameController.text.trim(),
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-      age: _ageController.text.trim(),
-      gender: _genderController.text.trim(),
+  // await signUpAndSaveUser(
+  //     context: context,
+  //     firstName: _firstNameController.text.trim(),
+  //     lastName: _lastNameController.text.trim(),
+  //     email: _emailController.text.trim(),
+  //     password: _passwordController.text.trim(),
+  //     age: _ageController.text.trim(),
+  //     gender: _genderController.text.trim(),
 
-    );
+  //   );
   }
 
   @override
@@ -304,10 +305,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
                     child: Text('Back'),
                   ),
-                ElevatedButton(
-                  onPressed: _currentStep == 5 ? _signUp : _nextStep,
-                  child: Text(_currentStep == 5 ? 'Finish' : 'Next'),
-                ),
+                // ElevatedButton(
+                //   // onPressed: _currentStep == 5 ? _signUp : _nextStep,
+                //   child: Text(_currentStep == 5 ? 'Finish' : 'Next'),
+                // ),
               ],
             ),
           ],

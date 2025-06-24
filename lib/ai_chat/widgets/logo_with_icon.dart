@@ -23,7 +23,7 @@ class LogoWithText extends StatelessWidget {
           SizedBox(
             width: 5.w,
           ),
-          Text('Psychiatric AI Bot',style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12.sp),)
+          Text('Hewar AI Bot',style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12.sp),)
         ],
       ),
     );
