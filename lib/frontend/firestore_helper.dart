@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:phychological_counselor/main/navigation/routes/name.dart';
 
 Future<void> signUpAndSaveUser({
+  bool isAdmin = false,
+
   required BuildContext context,
   required String firstName,
   required String lastName,
@@ -13,6 +15,7 @@ Future<void> signUpAndSaveUser({
   required String gender,
 }) async {
   try {
+    // 🟢 שלב 1: רישום המשתמש בפועל ב־Firebase Authentication
     final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -22,23 +25,34 @@ Future<void> signUpAndSaveUser({
     if (user == null) {
       throw Exception("לא נוצר משתמש.");
     }
+    final collection = isAdmin ? 'admin' : 'users';
 
-    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+    // 🟢 שלב 2: שמירת המשתמש ב־Firestore
+await FirebaseFirestore.instance.collection(collection).doc(user.uid).set({
       'userId': user.uid,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
-      'password': password, // אל תשאירי את זה בפרודקשן!
+      'password': password, // ⚠️ אל תשאירי את זה בפרודקשן!
       'age': int.tryParse(age),
       'gender': gender,
       'createdAt': FieldValue.serverTimestamp(),
     });
-
+if (!isAdmin) {
+      await FirebaseFirestore.instance.collection('notifications').add({
+        'type': 'signup',
+  'message': '$firstName $lastName registered for the website',
+        'timestamp': FieldValue.serverTimestamp(),
+        'userEmail': email,
+      });
+    }
+    // ניווט למסך הבית
     Navigator.pushNamedAndRemoveUntil(
       context,
       AppRoutes.home,
       (route) => false,
     );
+
   } on FirebaseAuthException catch (e) {
     String message;
     if (e.code == 'email-already-in-use') {

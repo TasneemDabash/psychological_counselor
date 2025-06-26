@@ -7,6 +7,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -19,6 +20,8 @@ class _SignUpPageState extends State<SignUpPage> {
   int _currentStep = 0;
 
   Future<void> _signUp() async {
+        if (!_formKey.currentState!.validate()) return;
+
     try {
       await FirebaseFirestore.instance.collection('users').add({
         'first_name': _firstNameController.text,

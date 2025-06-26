@@ -22,6 +22,7 @@ class ChatService {
     try {
       // First, store the message in messages collection
       await _firestore.collection('messages').add({
+          'chatId': chatId,
         'text': message,
         'sender': 'user',
         'userId': currentUserId,
@@ -59,6 +60,8 @@ class ChatService {
 
         // Add prediction response to messages collection
         await _firestore.collection('messages').add({
+            'chatId': chatId,
+
           'text': 'Prediction Score: ${prediction['prediction']}',
           'sender': 'system',
           'userId': currentUserId,
@@ -68,6 +71,8 @@ class ChatService {
         print('Failed to get prediction: ${response.body}');
         // Add error message to messages collection
         await _firestore.collection('messages').add({
+            'chatId': chatId,
+
           'text': 'Failed to process message. Please try again.',
           'sender': 'system',
           'userId': currentUserId,

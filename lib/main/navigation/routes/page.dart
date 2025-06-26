@@ -6,6 +6,7 @@ import 'package:phychological_counselor/frontend/TherapyBotPage.dart';
 import 'package:phychological_counselor/frontend/home_page.dart';
 import 'package:phychological_counselor/frontend/SignUpPage.dart';
 import 'package:phychological_counselor/home/screens/home_screen.dart';
+import '../../../../frontend/verify_email_page.dart';
 
 
 import '../../../data/local/user_database.dart';
@@ -25,6 +26,10 @@ class AppPage {
   PageEntity(
     route: AppRoutes.signup,
     page: SignUpPage(),
+  ),
+   PageEntity(
+    route: AppRoutes.verifyEmail,
+    page: VerifyEmailPage(),
   ),
   PageEntity(
     route: AppRoutes.home,

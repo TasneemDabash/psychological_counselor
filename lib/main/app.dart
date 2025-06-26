@@ -5,6 +5,7 @@ import '../ai_chat/provider/chat_provider.dart';
 import '../core/theme/app_theme.dart';
 import 'navigation/routes/name.dart';
 import 'navigation/routes/page.dart';
+import 'dart:html' as html;
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -17,6 +18,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      html.document.title = 'Hewar';
+    });
+  
     // initialization();
   }
 
@@ -28,6 +33,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+      
       providers: [
         ...AppPage.allBlocProviders(context),
         ChangeNotifierProvider(create: (_) => ChatProvider()),

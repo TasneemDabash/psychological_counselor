@@ -8,10 +8,14 @@ class TherapyBotPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white, // אוף-וייט רך מאוד
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+                  SizedBox(height: 100), // ← זה מה שידחוף את הטקסטים למטה 👇
+
             // Image.asset(
             //   'assets/images/favicon.png',
             //   width: 100,
@@ -26,7 +30,7 @@ class TherapyBotPage extends StatelessWidget {
             // ),
             SizedBox(height: 20),
             Text(
-              "Hey! I'm TherapyBot",
+              "Hey! I'm counseling_chatbot",
               style: TextStyle(
                 color: Colors.indigo.shade400,
                 fontSize: 24,
@@ -37,7 +41,7 @@ class TherapyBotPage extends StatelessWidget {
             Text(
               "I'm here to help you love and nurture yourself",
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.indigo.shade400,
                 fontSize: 16,
               ),
               textAlign: TextAlign.center,

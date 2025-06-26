@@ -9,10 +9,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'dart:async';
+import 'package:record/record.dart'; // ודא שאתה משתמש בגרסה העדכנית ביותר
 
 class AudioHandler {
-  final Record _recorder = Record();
+final AudioRecorder _recorder = AudioRecorder();
   html.MediaRecorder? _mediaRecorder;
+  html.MediaStream? _stream;
   List<html.Blob> _audioChunks = [];
 
   Future<void> startRecording() async {
@@ -28,8 +30,10 @@ class AudioHandler {
     } else {
       final dir = await getApplicationDocumentsDirectory();
       final path = p.join(dir.path, 'audio_${DateTime.now().millisecondsSinceEpoch}.m4a');
-      await _recorder.start(path: path);
-    }
+await _recorder.start(
+      const RecordConfig(encoder: AudioEncoder.aacLc), // חובה
+      path: path,
+    );    }
   }
 
   Future<String> stopAndTranscribe(bool isWeb) async {
@@ -39,6 +43,8 @@ class AudioHandler {
         completer.complete(html.Blob(_audioChunks));
       });
       _mediaRecorder!.stop();
+_stream?.getTracks().forEach((track) => track.stop());  // ← תיקון כאן!
+
       final blob = await completer.future;
       final reader = html.FileReader();
       reader.readAsArrayBuffer(blob);
@@ -54,7 +60,7 @@ class AudioHandler {
 
   Future<String> _transcribeAudio(String base64Audio) async {
     final response = await http.post(
-      Uri.parse('https://speech.googleapis.com/v1/speech:recognize?key=YOUR_GOOGLE_API_KEY'),
+      Uri.parse('https://speech.googleapis.com/v1/speech:recognize?key=AIzaSyAYsKJxeVTFAQabU_suLlcJRVZ7Zbvirvg'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "config": {

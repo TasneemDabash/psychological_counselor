@@ -1,18 +1,7 @@
-// <<<<<<< HEAD
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:phychological_counselor/home/screens/home_screen.dart'; // היבוא של HomeScreen
-// import 'package:phychological_counselor/main/navigation/routes/name.dart';
-// =======
-// ✅ הקובץ הראשי SignUpPage.dart לאחר הפיצול
 
 import 'package:flutter/material.dart';
-import 'package:phychological_counselor/frontend/signup_steps.dart';
 import 'package:phychological_counselor/frontend/validation.dart';
 import 'package:phychological_counselor/frontend/firestore_helper.dart';
-import 'package:phychological_counselor/frontend/email_validator.dart';
-
-
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -20,7 +9,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  int _currentStep = 0;
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -30,199 +18,12 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
-// <<<<<<< HEAD
-//   Future<void> _signUp() async {
-//     try {
-//       await FirebaseFirestore.instance.collection('users').add({
-//           'firstName': _firstNameController.text.trim(),
-//   'lastName': _lastNameController.text.trim(),
-//   'email': _emailController.text.trim(),
-//   'password': _passwordController.text.trim(),
-//         'age': int.parse(_ageController.text),
-//         'gender': _genderController.text,
-//       });
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Sign Up successful!')),
-//       );
-
-//       Navigator.pushNamedAndRemoveUntil(
-//         context,
-//  AppRoutes.home,
-//   (route) => false,      );
-
-//     } catch (e) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Sign Up failed: $e')),
-//       );
-//     }
-//   }
-
-//   void _nextStep() {
-//     if (!_validateCurrentStep()) return;
-
-// =======
-  void _nextStep() {
-    if (!_validateCurrentStep()) return;
-
-    setState(() {
-      _currentStep++;
-    });
-  }
-
-  bool _validateCurrentStep() {
-// <<<<<<< HEAD
-//     switch (_currentStep) {
-//       case 0:
-//         if (_firstNameController.text.isEmpty) {
-//           _showError('First name is required');
-//           return false;
-//         }
-//         break;
-//       case 1:
-//         if (_lastNameController.text.isEmpty) {
-//           _showError('Last name is required');
-//           return false;
-//         }
-//         break;
-//       case 2:
-//         if (_emailController.text.isEmpty ||
-//             !_isValidEmail(_emailController.text)) {
-//           _showError('Valid email is required');
-//           return false;
-//         }
-//         if (_emailController.text != _confirmEmailController.text) {
-//           _showError('Emails do not match');
-//           return false;
-//         }
-//         break;
-//       case 3:
-//         final age = int.tryParse(_ageController.text);
-//         if (age == null || age <= 16) {
-//           _showError('Age must be greater than 16');
-//           return false;
-//         }
-//         break;
-//       case 4:
-//         if (_genderController.text.isEmpty) {
-//           _showError('Gender is required');
-//           return false;
-//         }
-//         break;
-//       case 5:
-//         if (_passwordController.text.isEmpty ||
-//             !_isValidPassword(_passwordController.text)) {
-//           _showError(
-//               'Password must be at least 8 characters, include a number, and an uppercase letter');
-//           return false;
-//         }
-//         if (_passwordController.text != _confirmPasswordController.text) {
-//           _showError('Passwords do not match');
-//           return false;
-//         }
-//         break;
-//     }
-//     return true;
-//   }
-
-//   bool _isValidEmail(String email) {
-//     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-//     return emailRegex.hasMatch(email);
-//   }
-
-//   bool _isValidPassword(String password) {
-//     return password.length >= 8 &&
-//         RegExp(r'[A-Z]').hasMatch(password) &&
-//         RegExp(r'[0-9]').hasMatch(password);
-//   }
-
-//   void _showError(String message) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text(message)),
-//     );
-//   }
-
-//   Widget _getStepContent() {
-//     switch (_currentStep) {
-//       case 0:
-//         return _buildTextInputStep(
-//           controller: _firstNameController,
-//           label: 'First Name',
-//         );
-//       case 1:
-//         return _buildTextInputStep(
-//           controller: _lastNameController,
-//           label: 'Last Name',
-//         );
-//       case 2:
-//         return Column(
-//           children: [
-//             _buildTextInputStep(
-//               controller: _emailController,
-//               label: 'Email',
-//             ),
-//             SizedBox(height: 10),
-//             _buildTextInputStep(
-//               controller: _confirmEmailController,
-//               label: 'Confirm Email',
-//             ),
-//           ],
-//         );
-//       case 3:
-//         return _buildTextInputStep(
-//           controller: _ageController,
-//           label: 'Age',
-//           keyboardType: TextInputType.number,
-//         );
-//       case 4:
-//         return DropdownButtonFormField<String>(
-//           value: null,
-//           items: ['Male', 'Female', 'Other'].map((String value) {
-//             return DropdownMenuItem<String>(
-//               value: value,
-//               child: Text(value),
-//             );
-//           }).toList(),
-//           onChanged: (value) {
-//             _genderController.text = value!;
-//           },
-//           decoration: InputDecoration(labelText: 'Gender'),
-//         );
-//       case 5:
-//         return Column(
-//           children: [
-//             _buildTextInputStep(
-//               controller: _passwordController,
-//               label: 'Password',
-//               obscureText: true,
-//             ),
-//             SizedBox(height: 10),
-//             _buildTextInputStep(
-//               controller: _confirmPasswordController,
-//               label: 'Confirm Password',
-//               obscureText: true,
-//             ),
-//           ],
-//         );
-//       default:
-//         return Container();
-//     }
-//   }
-
-//   Widget _buildTextInputStep({
-//     required TextEditingController controller,
-//     required String label,
-//     bool obscureText = false,
-//     TextInputType keyboardType = TextInputType.text,
-//   }) {
-//     return TextField(
-//       controller: controller,
-//       decoration: InputDecoration(labelText: label),
-//       obscureText: obscureText,
-//       keyboardType: keyboardType,
-// =======
-    return validateStep(
-      step: _currentStep,
+  void _signUp() async {
+    final valid = validateStep(
+      step: 0,
       context: context,
       firstNameController: _firstNameController,
       lastNameController: _lastNameController,
@@ -233,22 +34,20 @@ class _SignUpPageState extends State<SignUpPage> {
       passwordController: _passwordController,
       confirmPasswordController: _confirmPasswordController,
     );
-  }
 
-  void _signUp() async {
-    final email = _emailController.text.trim();
+    if (!valid) return;
 
-  // שלב 1: בדיקה אם האימייל אמיתי ונשלח
-  final isValid = await isRealEmail(email);
-  if (!isValid) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('האימייל אינו תקף או לא ניתן לשלוח אליו')),
-    );
-    return;
-  }
+    if (_emailController.text.trim() != _confirmEmailController.text.trim()) {
+_showStyledError('Signup Error', 'Emails do not match.');
+      return;
+    }
 
- 
-  await signUpAndSaveUser(
+    if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
+      _showStyledError('Signup Error', 'Passwords do not match.');
+      return;
+    }
+
+    await signUpAndSaveUser(
       context: context,
       firstName: _firstNameController.text.trim(),
       lastName: _lastNameController.text.trim(),
@@ -256,61 +55,272 @@ class _SignUpPageState extends State<SignUpPage> {
       password: _passwordController.text.trim(),
       age: _ageController.text.trim(),
       gender: _genderController.text.trim(),
-
     );
   }
+
+  void _showStyledError(String title, String message) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      backgroundColor: Colors.grey[200],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 18,
+          color: Colors.indigo.shade400,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: Text(
+        message,
+        style: TextStyle(fontSize: 16, color: Colors.black87),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('OK', style: TextStyle(color: Colors.indigo.shade400)),
+        ),
+      ],
+    ),
+  );
+}
+
+  void _showInlineError(String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message, style: const TextStyle(color: Colors.white)),
+      backgroundColor: Colors.redAccent,
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      duration: const Duration(seconds: 3),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 160,
+        title: Text(
+          'Sign Up',
+          style: TextStyle(
+            color: Colors.indigo.shade400,
+            fontSize: 50,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-// <<<<<<< HEAD
-//             Expanded(child: _getStepContent()),
-// =======
-            Expanded(
-              child: SignUpSteps(
-                step: _currentStep,
-                firstNameController: _firstNameController,
-                lastNameController: _lastNameController,
-                emailController: _emailController,
-                confirmEmailController: _confirmEmailController,
-                ageController: _ageController,
-                genderController: _genderController,
-                passwordController: _passwordController,
-                confirmPasswordController: _confirmPasswordController,
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Card(
+            color: Colors.white,
+            elevation: 0,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: _buildTextField(_firstNameController, 'First Name')),
+                      const SizedBox(width: 10),
+                      Expanded(child: _buildTextField(_lastNameController, 'Last Name')),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: _buildTextField(_emailController, 'Email')),
+                      const SizedBox(width: 10),
+                      Expanded(child: _buildTextField(_confirmEmailController, 'Confirm Email')),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: _buildTextField(_ageController, 'Age', keyboardType: TextInputType.number)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            canvasColor: Colors.grey[200],
+                            highlightColor: Colors.indigo.shade100,
+                            splashColor: Colors.indigo.shade100,
+                            hoverColor: Colors.indigo.shade100,
+                          ),
+                          child: DropdownButtonFormField<String>(
+                            value: _genderController.text.isNotEmpty ? _genderController.text : null,
+                            items: ['Male', 'Female', 'Other']
+                                .map((value) => DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value, style: TextStyle(fontSize: 16, color: Colors.black)),
+                                    ))
+                                .toList(),
+                            onChanged: (value) => _genderController.text = value ?? '',
+                            style: const TextStyle(fontSize: 16, color: Colors.black),
+                            dropdownColor: Colors.grey[200],
+                            iconEnabledColor: Colors.indigo.shade400,
+                            decoration: InputDecoration(
+                              labelText: 'Gender',
+                              labelStyle: const TextStyle(fontSize: 14, color: Colors.black),
+                              floatingLabelStyle: TextStyle(fontSize: 14, color: Colors.indigo.shade400),
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black, width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.indigo.shade400, width: 2),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildTextField(
+                          _passwordController,
+                          'Password',
+                          obscure: _obscurePassword,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: _buildTextField(
+                          _confirmPasswordController,
+                          'Confirm Password',
+                          obscure: _obscureConfirmPassword,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: _signUp,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.indigo.shade400,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    ),
+                    child: const Text('Sign Up', style: TextStyle(fontSize: 18)),
+                  ),
+                  const SizedBox(height: 10),
+ElevatedButton(
+  onPressed: _signUpAdmin,
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.red.shade400,
+    foregroundColor: Colors.white,
+    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+  ),
+  child: const Text('Sign Up Admin', style: TextStyle(fontSize: 18)),
+),
+
+                ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+void _signUpAdmin() async {
+  final valid = validateStep(
+    step: 0,
+    context: context,
+    firstNameController: _firstNameController,
+    lastNameController: _lastNameController,
+    emailController: _emailController,
+    confirmEmailController: _confirmEmailController,
+    ageController: _ageController,
+    genderController: _genderController,
+    passwordController: _passwordController,
+    confirmPasswordController: _confirmPasswordController,
+  );
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (_currentStep > 0)
-                  ElevatedButton(
-// <<<<<<< HEAD
-//                     onPressed: () {
-//                       setState(() {
-//                         _currentStep--;
-//                       });
-//                     },
-// =======
-                    onPressed: () => setState(() => _currentStep--),
+  if (!valid) return;
 
-                    child: Text('Back'),
-                  ),
-                ElevatedButton(
-                  onPressed: _currentStep == 5 ? _signUp : _nextStep,
-                  child: Text(_currentStep == 5 ? 'Finish' : 'Next'),
-                ),
-              ],
-            ),
-          ],
+  if (_emailController.text.trim() != _confirmEmailController.text.trim()) {
+    _showStyledError('Signup Error', 'Emails do not match.');
+    return;
+  }
+
+  if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
+    _showStyledError('Signup Error', 'Passwords do not match.');
+    return;
+  }
+
+  await signUpAndSaveUser(
+    context: context,
+    firstName: _firstNameController.text.trim(),
+    lastName: _lastNameController.text.trim(),
+    email: _emailController.text.trim(),
+    password: _passwordController.text.trim(),
+    age: _ageController.text.trim(),
+    gender: _genderController.text.trim(),
+    isAdmin: true, // <- שימי לב לפרמטר הזה
+  );
+}
+
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label, {
+    bool obscure = false,
+    TextInputType keyboardType = TextInputType.text,
+    Widget? suffixIcon,
+  }) {
+    return SizedBox(
+      height: 50,
+      child: TextField(
+        controller: controller,
+        obscureText: obscure,
+        keyboardType: keyboardType,
+        cursorColor: Colors.indigo.shade400,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(fontSize: 14, color: Colors.black),
+          floatingLabelStyle: TextStyle(color: Colors.indigo.shade400, fontSize: 14),
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          filled: true,
+          fillColor: Colors.white,
+          suffixIcon: suffixIcon,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black, width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.indigo.shade400, width: 2),
+          ),
         ),
       ),
     );
